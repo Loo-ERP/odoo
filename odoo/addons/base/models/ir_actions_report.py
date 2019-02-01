@@ -540,7 +540,7 @@ class IrActionsReport(models.Model):
             if not record_map or not self.attachment:
                 streams.append(pdf_content_stream)
             else:
-                if len(res_ids) == 1:
+                if len(res_ids) >= 1:
                     # Only one record, so postprocess directly and append the whole pdf.
                     if res_ids[0] in record_map and not res_ids[0] in save_in_attachment:
                         new_stream = self.postprocess_pdf_report(record_map[res_ids[0]], pdf_content_stream)
