@@ -394,7 +394,10 @@ actual arch.
 
     def _compute_defaults(self, values):
         if 'inherit_id' in values:
-            values.setdefault('mode', 'extension' if values['inherit_id'] else 'primary')
+            # Do not automatically change the mode if the view already has an inherit_id,
+            # and the user change it to another.
+            if not values['inherit_id'] or all(not view.inherit_id for view in self):
+                values.setdefault('mode', 'extension' if values['inherit_id'] else 'primary')
         return values
 
     @api.model_create_multi
@@ -1174,6 +1177,9 @@ actual arch.
         """ Return the view ID corresponding to ``template``, which may be a
         view ID or an XML ID. Note that this method may be overridden for other
         kinds of template values.
+
+        This method could return the ID of something that is not a view (when
+        using fallback to `xmlid_to_res_id`).
         """
         if isinstance(template, pycompat.integer_types):
             return template

@@ -419,9 +419,6 @@ class AccountMove(models.Model):
                                                   journal_id=journal_id,
                                                   auto=auto)
             reversed_moves |= reversed_move
-            #unreconcile all lines reversed
-            aml = ac_move.line_ids.filtered(lambda x: x.account_id.reconcile or x.account_id.internal_type == 'liquidity')
-            aml.remove_move_reconcile()
             #reconcile together the reconcilable (or the liquidity aml) and their newly created counterpart
             for account in set([x.account_id for x in aml]):
                 to_rec = aml.filtered(lambda y: y.account_id == account)
@@ -437,6 +434,18 @@ class AccountMove(models.Model):
     @api.multi
     def open_reconcile_view(self):
         return self.line_ids.open_reconcile_view()
+
+    # FIXME: Clarify me and change me in master
+    @api.multi
+    def action_duplicate(self):
+        self.ensure_one()
+        action = self.env.ref('account.action_move_journal_line').read()[0]
+        action['target'] = 'inline'
+        action['context'] = dict(self.env.context)
+        action['context']['view_no_maturity'] = False
+        action['views'] = [(self.env.ref('account.view_move_form').id, 'form')]
+        action['res_id'] = self.copy().id
+        return action
 
     @api.model
     def _run_reverses_entries(self):
@@ -627,7 +636,7 @@ class AccountMoveLine(models.Model):
         index=True, store=True, copy=False)  # related is required
     blocked = fields.Boolean(string='No Follow-up', default=False,
         help="You can check this box to mark this journal item as a litigation with the associated partner")
-    date_maturity = fields.Date(string='Due date', index=True, required=True,
+    date_maturity = fields.Date(string='Due date', index=True, required=True, copy=False,
         help="This field is used for payable and receivable journal entries. You can put the limit date for the payment of this line.")
     date = fields.Date(related='move_id.date', string='Date', index=True, store=True, copy=False, readonly=False)  # related is required
     analytic_line_ids = fields.One2many('account.analytic.line', 'move_id', string='Analytic lines', oldname="analytic_lines")
@@ -784,7 +793,7 @@ class AccountMoveLine(models.Model):
             (multiple_currency and float_compare(total_debit, total_credit, precision_rounding=digits_rounding_precision) == 0):
             exchange_move_id = False
             # Eventually create a journal entry to book the difference due to foreign currency's exchange rate that fluctuates
-            if to_balance and any([residual for aml, residual in to_balance.values()]):
+            if to_balance and any([not float_is_zero(residual, precision_rounding=digits_rounding_precision) for aml, residual in to_balance.values()]):
                 exchange_move = self.env['account.move'].create(
                     self.env['account.full.reconcile']._prepare_exchange_diff_move(move_date=maxdate, company=amls[0].company_id))
                 part_reconcile = self.env['account.partial.reconcile']
@@ -813,7 +822,7 @@ class AccountMoveLine(models.Model):
         (debit_moves + credit_moves).read([field])
         to_create = []
         cash_basis = debit_moves and debit_moves[0].account_id.internal_type in ('receivable', 'payable') or False
-        cash_basis_percentage_before_rec = []
+        cash_basis_percentage_before_rec = {}
         while (debit_moves and credit_moves):
             debit_move = debit_moves[0]
             credit_move = credit_moves[0]
@@ -848,7 +857,7 @@ class AccountMoveLine(models.Model):
 
             if cash_basis:
                 tmp_set = debit_move | credit_move
-                cash_basis_percentage_before_rec.append(tmp_set._get_matched_percentage())
+                cash_basis_percentage_before_rec.update(tmp_set._get_matched_percentage())
 
             to_create.append({
                 'debit_move_id': debit_move.id,
@@ -859,14 +868,12 @@ class AccountMoveLine(models.Model):
             })
 
         part_rec = self.env['account.partial.reconcile']
-        index = 0
         with self.env.norecompute():
             for partial_rec_dict in to_create:
                 new_rec = self.env['account.partial.reconcile'].create(partial_rec_dict)
                 part_rec += new_rec
                 if cash_basis:
-                    new_rec.create_tax_cash_basis_entry(cash_basis_percentage_before_rec[index])
-                    index += 1
+                    new_rec.create_tax_cash_basis_entry(cash_basis_percentage_before_rec)
         self.recompute()
 
         return debit_moves+credit_moves
@@ -888,22 +895,13 @@ class AccountMoveLine(models.Model):
         ret = self._reconcile_lines(debit_moves, credit_moves, field)
         return ret
 
-    @api.multi
-    def reconcile(self, writeoff_acc_id=False, writeoff_journal_id=False):
-        # Empty self can happen if the user tries to reconcile entries which are already reconciled.
-        # The calling method might have filtered out reconciled lines.
-        if not self:
-            return True
-
+    def _check_reconcile_validity(self):
         #Perform all checks on lines
         company_ids = set()
         all_accounts = []
-        partners = set()
         for line in self:
             company_ids.add(line.company_id.id)
             all_accounts.append(line.account_id)
-            if (line.account_id.internal_type in ('receivable', 'payable')):
-                partners.add(line.partner_id.id)
             if line.reconciled:
                 raise UserError(_('You are trying to reconcile some entries that are already reconciled.'))
         if len(company_ids) > 1:
@@ -913,6 +911,14 @@ class AccountMoveLine(models.Model):
         if not (all_accounts[0].reconcile or all_accounts[0].internal_type == 'liquidity'):
             raise UserError(_('Account %s (%s) does not allow reconciliation. First change the configuration of this account to allow it.') % (all_accounts[0].name, all_accounts[0].code))
 
+    @api.multi
+    def reconcile(self, writeoff_acc_id=False, writeoff_journal_id=False):
+        # Empty self can happen if the user tries to reconcile entries which are already reconciled.
+        # The calling method might have filtered out reconciled lines.
+        if not self:
+            return True
+
+        self._check_reconcile_validity()
         #reconcile everything that can be
         remaining_moves = self.auto_reconcile_lines()
 
@@ -930,7 +936,7 @@ class AccountMoveLine(models.Model):
             #add writeoff line to reconcile algorithm and finish the reconciliation
             remaining_moves = (remaining_moves + writeoff_to_reconcile).auto_reconcile_lines()
         # Check if reconciliation is total or needs an exchange rate entry to be created
-        (self+writeoff_to_reconcile).check_full_reconcile()
+        (self + writeoff_to_reconcile).check_full_reconcile()
         return True
 
     def _create_writeoff(self, writeoff_vals):
@@ -974,8 +980,9 @@ class AccountMoveLine(models.Model):
                     raise UserError(_("Either pass both debit and credit or none."))
                 if 'date' not in vals:
                     vals['date'] = self._context.get('date_p') or fields.Date.today()
-                    if vals['date'] < date:
-                        date = vals['date']
+                vals['date'] = fields.Date.to_date(vals['date'])
+                if vals['date'] and vals['date'] < date:
+                    date = vals['date']
                 if 'name' not in vals:
                     vals['name'] = self._context.get('comment') or _('Write-Off')
                 if 'analytic_account_id' not in vals:
@@ -1117,7 +1124,10 @@ class AccountMoveLine(models.Model):
             self._update_check()
         #when we set the expected payment date, log a note on the invoice_id related (if any)
         if vals.get('expected_pay_date') and self.invoice_id:
-            msg = _('New expected payment date: ') + fields.Date.to_string(vals['expected_pay_date']) + '.\n' + vals.get('internal_note', '')
+            str_expected_pay_date = vals['expected_pay_date']
+            if isinstance(str_expected_pay_date, date):
+                str_expected_pay_date = fields.Date.to_string(str_expected_pay_date)
+            msg = _('New expected payment date: ') + str_expected_pay_date + '.\n' + vals.get('internal_note', '')
             self.invoice_id.message_post(body=msg) #TODO: check it is an internal note (not a regular email)!
         #when making a reconciliation on an existing liquidity journal item, mark the payment as reconciled
         for record in self:
@@ -1477,10 +1487,14 @@ class AccountPartialReconcile(models.Model):
             #move_date is the max of the 2 reconciled items
             if move_date < move.date:
                 move_date = move.date
+            percentage_before = percentage_before_rec[move.id]
+            percentage_after = move.line_ids[0]._get_matched_percentage()[move.id]
+            # update the percentage before as the move can be part of
+            # multiple partial reconciliations
+            percentage_before_rec[move.id] = percentage_after
+
             for line in move.line_ids:
                 if not line.tax_exigible:
-                    percentage_before = percentage_before_rec[move.id]
-                    percentage_after = line._get_matched_percentage()[move.id]
                     #amount is the current cash_basis amount minus the one before the reconciliation
                     amount = line.balance * percentage_after - line.balance * percentage_before
                     rounded_amt = self._get_amount_tax_cash_basis(amount, line)
@@ -1498,7 +1512,7 @@ class AccountPartialReconcile(models.Model):
                             'analytic_account_id': line.analytic_account_id.id,
                             'analytic_tag_ids': line.analytic_tag_ids.ids,
                             'tax_exigible': True,
-                            'amount_currency': self.amount_currency and line.currency_id.round(-line.amount_currency * amount / line.balance) or 0.0,
+                            'amount_currency': line.amount_currency and line.currency_id.round(-line.amount_currency * amount / line.balance) or 0.0,
                             'currency_id': line.currency_id.id,
                             'move_id': newly_created_move.id,
                             'partner_id': line.partner_id.id,
@@ -1513,7 +1527,7 @@ class AccountPartialReconcile(models.Model):
                             'analytic_tag_ids': line.analytic_tag_ids.ids,
                             'tax_line_id': line.tax_line_id.id,
                             'tax_exigible': True,
-                            'amount_currency': self.amount_currency and line.currency_id.round(line.amount_currency * amount / line.balance) or 0.0,
+                            'amount_currency': line.amount_currency and line.currency_id.round(line.amount_currency * amount / line.balance) or 0.0,
                             'currency_id': line.currency_id.id,
                             'move_id': newly_created_move.id,
                             'partner_id': line.partner_id.id,
@@ -1552,6 +1566,7 @@ class AccountPartialReconcile(models.Model):
                                 'amount_currency': self.amount_currency and line.currency_id.round(-line.amount_currency * amount / line.balance) or 0.0,
                                 'partner_id': line.partner_id.id,
                             })
+
         if newly_created_move:
             if move_date > (self.company_id.period_lock_date or date.min) and newly_created_move.date != move_date:
                 # The move date should be the maximum date between payment and invoice (in case

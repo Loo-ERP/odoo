@@ -36,6 +36,7 @@
 # Malek Gifaeri <Malek.gifaeri@gmail.com>, 2018
 # hoxhe Aits <hoxhe0@gmail.com>, 2018
 # Mostafa Hanafy <mostafa.s.hanafy@gmail.com>, 2018
+# Ahmed Yousif <ahmed.yousif@outlook.com>, 2018
 # Yihya Hugirat <hugirat@gmail.com>, 2018
 # Martin Trigaux, 2018
 # Abdulmajeed Alomar <majeeed87@gmail.com>, 2018
@@ -51,7 +52,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-19 08:20+0000\n"
+"POT-Creation-Date: 2019-01-09 10:31+0000\n"
 "PO-Revision-Date: 2018-08-24 09:14+0000\n"
 "Last-Translator: jahzar <jahzar@gmail.com>, 2018\n"
 "Language-Team: Arabic (https://www.transifex.com/odoo/teams/41243/ar/)\n"
@@ -70,9 +71,9 @@ msgid ""
 " * The 'Paid' status is set automatically when the invoice is paid. Its related journal entries may or may not be reconciled.\n"
 " * The 'Cancelled' status is used when user cancel invoice."
 msgstr ""
-"*الحالة ' مسودة ' تستخدم عند ادخال المستخدم لفاتورة جديده وغير مؤكده.\n"
-" * حالة ال ' مفتوح ' تستخدم عند تأكيد ادخالات فاتورة المستخدم واصدار رقم لها،تبقى في تلك الحالة حتى يتم تسجيل سداد الفاتورة.\n"
-" * يتم تعيين الحالة ' مدفوعة ' تلقائيا عند تسجيل سداد الفاتورة. حالة تسوية قيد اليومية المرتبط بالفاتورة والسداد قد يكون مسوى او غير مسوى. \n"
+"*حالة ' مسودة ' تستخدم عند ادخال المستخدم لفاتورة جديده وغير مؤكده.\n"
+" * حالة ' مفتوح ' تستخدم عند تأكيد ادخالات فاتورة المستخدم واصدار رقم لها،تبقى في تلك الحالة حتى يتم سداد الفاتورة.\n"
+" * حالة ' مدفوعة ' تستخدم عند تسجيل سداد الفاتورة. حالة تسوية قيد اليومية المرتبط بالفاتورة والسداد قد يكون مسوى او غير مسوى. \n"
 " * الحالة ' ملغي ' تستخدم عند إلغاء المستخدم للفاتورة."
 
 #. module: account
@@ -273,9 +274,27 @@ msgid "<em>Draft Invoice</em>"
 msgstr "<em>فاتورة مسودّة</em>"
 
 #. module: account
+#: model_terms:ir.ui.view,arch_db:account.account_move_line_view_kanban
+#: model_terms:ir.ui.view,arch_db:account.view_account_move_kanban
+msgid "<i class=\"fa fa-clock-o\" aria-label=\"Date\" role=\"img\" title=\"Date\"/>"
+msgstr ""
+
+#. module: account
+#: model_terms:ir.ui.view,arch_db:account.view_account_payment_kanban
+msgid "<i class=\"fa fa-clock-o\" role=\"img\" aria-label=\"Date\" title=\"Date\"/>"
+msgstr ""
+
+#. module: account
 #: model_terms:ir.ui.view,arch_db:account.portal_invoice_page
 msgid "<i class=\"fa fa-download\"/> Download"
 msgstr "تحميل"
+
+#. module: account
+#: model_terms:ir.ui.view,arch_db:account.account_journal_dashboard_kanban_view
+msgid ""
+"<i class=\"fa fa-ellipsis-v\" aria-label=\"Selection\" role=\"img\" "
+"title=\"Selection\"/>"
+msgstr ""
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.portal_invoice_page
@@ -348,6 +367,21 @@ msgstr ""
 "<span class=\"badge badge-pill badge-warning\"><i class=\"fa fa-fw fa-"
 "remove\" aria-label=\"Cancelled\" title=\"Cancelled\" role=\"img\"/><span "
 "class=\"d-none d-md-inline\"> ملغية</span></span>"
+
+#. module: account
+#: model_terms:ir.ui.view,arch_db:account.res_config_settings_view_form
+msgid ""
+"<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
+"specific.\" aria-label=\"Values set here are company-specific.\" "
+"groups=\"base.group_multi_company\" role=\"img\"/>"
+msgstr ""
+
+#. module: account
+#: model_terms:ir.ui.view,arch_db:account.res_config_settings_view_form
+msgid ""
+"<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
+"specific.\"/>"
+msgstr ""
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.invoice_supplier_form
@@ -10481,14 +10515,6 @@ msgstr ""
 "خواصه."
 
 #. module: account
-#: code:addons/account/models/account_invoice.py:1439
-#, python-format
-msgid ""
-"This %s has been created from: <a href=# data-oe-model=account.invoice data-"
-"oe-id=%d>%s</a><br>Reason: %s"
-msgstr ""
-
-#. module: account
 #: code:addons/account/models/account_journal_dashboard.py:100
 #, python-format
 msgid "This Week"
@@ -10556,6 +10582,14 @@ msgstr ""
 "تساعدك هذة القيمة المنطقية على اختيار اذا كنت تريد الاقتراح على المستخدم "
 "ترميز معدلات المبيعات و المشتريات  أو الاختيار من قائمة الضرائب. هذا الخيار "
 "الأخير يفترض أن مجموعة الضرائب المُعرفة للقالب المُختار انتهت "
+
+#. module: account
+#: code:addons/account/models/account_invoice.py:1458
+#, python-format
+msgid ""
+"This customer invoice credit note has been created from: <a href=# data-oe-"
+"model=account.invoice data-oe-id=%d>%s</a><br>Reason: %s"
+msgstr ""
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.res_config_settings_view_form
@@ -10698,6 +10732,14 @@ msgstr ""
 "هذا الحقل التقني يمكن أن يُستخدم عند انشاء/استيراد بند كشف الحساب لكى نتجنب "
 "عملية تسويته بعد ذلك. بند كشف الحساب سيُنشئ ببساطة القيد المناظر لهذا "
 "الحساب. "
+
+#. module: account
+#: code:addons/account/models/account_invoice.py:1460
+#, python-format
+msgid ""
+"This vendor bill credit note has been created from: <a href=# data-oe-"
+"model=account.invoice data-oe-id=%d>%s</a><br>Reason: %s"
+msgstr ""
 
 #. module: account
 #: model_terms:ir.actions.act_window,help:account.action_validate_account_move

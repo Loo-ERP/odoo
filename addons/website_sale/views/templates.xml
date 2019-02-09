@@ -413,9 +413,10 @@
     <!-- /shop/product product page -->
     <template id="product_edit_options" inherit_id="website.user_navbar" name="Edit Product Options">
         <xpath expr="//li[@id='edit-page-menu']" position="after">
-            <t t-if="main_object._name == 'product.template'" t-set="action" t-value="'product.product_template_action'" />
+            <t t-if="main_object._name == 'product.template'" t-set="action" t-value="'website_sale.product_template_action_website'" />
         </xpath>
     </template>
+
     <template id="product" name="Product">
 
         <t t-set="first_possible_combination" t-value="product._get_first_possible_combination()"/>
@@ -1116,7 +1117,7 @@
             </form>
             <div t-attf-class="card #{selected and 'border_primary' or 'js_change_shipping'}">
                 <div class='card-body' style='min-height: 130px;'>
-                    <a t-if="not actual_partner or (ship.id in actual_partner.ids + actual_partner.child_ids.ids)" href="#" class="btn btn-link float-right p-0 js_edit_address no-decoration" role="button" title="Edit this address" aria-label="Edit this address"><i class='fa fa-edit'/></a>
+                    <a t-if="not actual_partner or (ship.id in actual_partner.child_ids.ids)" href="#" class="btn btn-link float-right p-0 js_edit_address no-decoration" role="button" title="Edit this address" aria-label="Edit this address"><i class='fa fa-edit'/></a>
                     <t t-esc="contact" t-options="dict(widget='contact', fields=['name', 'address'], no_marker=True)"/>
                 </div>
                 <div class='card-footer' t-if='not readonly'>

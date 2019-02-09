@@ -253,6 +253,8 @@ def combine(operator, unit, zero, domains):
     """
     result = []
     count = 0
+    if domains == [unit]:
+        return unit
     for domain in domains:
         if domain == unit:
             continue

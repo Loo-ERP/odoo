@@ -4,7 +4,7 @@
 # 
 # Translators:
 # Edgaras Kriukonis <edgaras@focusate.eu>, 2018
-# Zygi Mantus <zygimantus@gmail.com>, 2018
+# Zygimantus <zygimantus@gmail.com>, 2018
 # Arminas Grigonis <arminas@versada.lt>, 2018
 # Šarūnas Ažna <sarunas.azna@gmail.com>, 2018
 # Audrius Palenskis <audrius.palenskis@gmail.com>, 2018
@@ -18,18 +18,18 @@
 # Eimantas <eimantas@focusate.eu>, 2018
 # Paulius Sladkevičius <paulius@versada.eu>, 2018
 # Vytautas Stanaitis <vytautas@basas.lt>, 2018
-# Silvija Butko <silvija.butko@gmail.com>, 2018
 # Martin Trigaux, 2018
+# Silvija Butko <silvija.butko@gmail.com>, 2018
 # digitouch UAB <digitouchagencyeur@gmail.com>, 2018
-# Linas Versada <linaskrisiukenas@gmail.com>, 2018
+# Linas Versada <linaskrisiukenas@gmail.com>, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-19 08:47+0000\n"
+"POT-Creation-Date: 2019-01-09 10:38+0000\n"
 "PO-Revision-Date: 2018-08-24 09:14+0000\n"
-"Last-Translator: Linas Versada <linaskrisiukenas@gmail.com>, 2018\n"
+"Last-Translator: Linas Versada <linaskrisiukenas@gmail.com>, 2019\n"
 "Language-Team: Lithuanian (https://www.transifex.com/odoo/teams/41243/lt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -5434,6 +5434,40 @@ msgstr ""
 "<code>timezone</code>: naudingos Python bibliotekos"
 
 #. module: base
+#: model_terms:ir.ui.view,arch_db:base.view_res_company_kanban
+msgid ""
+"<i class=\"fa fa-building\" role=\"img\" aria-label=\"Enterprise\" "
+"title=\"Enterprise\"/>"
+msgstr ""
+
+#. module: base
+#: model_terms:ir.ui.view,arch_db:base.view_res_users_kanban
+msgid "<i class=\"fa fa-circle\" role=\"img\" aria-label=\"Invalid\" title=\"Invalid\"/>"
+msgstr ""
+
+#. module: base
+#: model_terms:ir.ui.view,arch_db:base.view_res_users_kanban
+msgid "<i class=\"fa fa-circle\" role=\"img\" aria-label=\"Ok\" title=\"Ok\"/>"
+msgstr ""
+
+#. module: base
+#: model_terms:ir.ui.view,arch_db:base.view_res_users_kanban
+msgid "<i class=\"fa fa-envelope\" role=\"img\" aria-label=\"Login\"/>"
+msgstr ""
+
+#. module: base
+#: model_terms:ir.ui.view,arch_db:base.view_rule_form
+msgid ""
+"<i class=\"fa fa-info fa-3x text-info float-left\" role=\"img\" aria-"
+"label=\"Info\" title=\"Info\"/>"
+msgstr ""
+
+#. module: base
+#: model_terms:ir.ui.view,arch_db:base.onboarding_container
+msgid "<i class=\"fa fa-times\" title=\"Close the onboarding panel\"/>"
+msgstr ""
+
+#. module: base
 #: model_terms:ir.ui.view,arch_db:base.onboarding_container
 msgid "<span aria-label=\"Close\">&amp;times;</span>"
 msgstr ""
@@ -5472,6 +5506,13 @@ msgstr ""
 msgid ""
 "<span class=\"o_form_label\">We suggest to reload the menu tab to see the "
 "new menus (Ctrl+T then Ctrl+R).\"</span>"
+msgstr ""
+
+#. module: base
+#: model_terms:ir.ui.view,arch_db:base.res_config_settings_view_form
+msgid ""
+"<span class=\"searchIcon\"><i class=\"fa fa-search\" role=\"img\" aria-"
+"label=\"Search\" title=\"Search\"/></span>"
 msgstr ""
 
 #. module: base
@@ -6166,7 +6207,7 @@ msgstr "Sąskaitos turėtojas"
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_partner_bank__acc_holder_name
 msgid "Account Holder Name"
-msgstr ""
+msgstr "Sąskaitos turėtojo vardas"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_invoice_extract
@@ -6214,6 +6255,8 @@ msgid ""
 "Account holder name, in case it is different than the name of the Account "
 "Holder"
 msgstr ""
+"Sąskaitos turėtojo vardas, tuo atveju, jei jis skiriasi nuo sąskaitą "
+"turinčio asmens"
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_accounting
@@ -6359,7 +6402,7 @@ msgstr ""
 #. module: base
 #: model:ir.model,name:base.model_ir_actions_act_window_view
 msgid "Action Window View"
-msgstr ""
+msgstr "Veiksmo lango peržiūra"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.ir_sequence_actions
@@ -6394,21 +6437,10 @@ msgid "Active"
 msgstr "Aktyvus"
 
 #. module: base
-#: selection:ir.actions.act_window.view,view_mode:0
-#: selection:ir.ui.view,type:0
-msgid "Activity"
-msgstr "Veikla"
-
-#. module: base
 #: model:ir.model.fields,field_description:base.field_ir_sequence__number_next_actual
 #: model:ir.model.fields,field_description:base.field_ir_sequence_date_range__number_next_actual
 msgid "Actual Next Number"
 msgstr ""
-
-#. module: base
-#: selection:ir.actions.server,state:0
-msgid "Add Followers"
-msgstr "Pridėti sekėjų"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_mail_bot
@@ -6597,12 +6629,12 @@ msgstr "Norint išdiegti modulį, reikalinga administratoriaus prieiga "
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.view_country_form
 msgid "Advanced Address Formatting"
-msgstr "Sudėtingesnis adreso formavimas"
+msgstr "Išplėstinis adreso formatavimas"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_event_track
 msgid "Advanced Events"
-msgstr "Papildomi įvykiai"
+msgstr "Išplėstiniai įvykiai"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_sale_enterprise
@@ -6614,7 +6646,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:base.view_model_fields_form
 #: model_terms:ir.ui.view,arch_db:base.view_model_form
 msgid "Advanced Properties"
-msgstr "Papildomos ypatybės"
+msgstr "Išplėstinės savybės"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_crm_enterprise
@@ -6768,6 +6800,13 @@ msgid ""
 msgstr ""
 "Leidžia Jums kurti sąskaitas faktūras ir sekti mokėjimus. Tai yra "
 "paprastesnė apskaitos modulio versija vadovams, kurie nėra buhalteriai."
+
+#. module: base
+#: model_terms:ir.actions.act_window,help:base.action_attachment
+msgid ""
+"Also you will find here all the related documents and download it by "
+"clicking on any individual document."
+msgstr ""
 
 #. module: base
 #: code:addons/base/models/ir_fields.py:394
@@ -7037,11 +7076,6 @@ msgid "At least one language must be active."
 msgstr "Mažiausiai viena kalba turi būti aktyvi"
 
 #. module: base
-#: model_terms:ir.actions.act_window,help:base.action_attachment
-msgid "Attach a new document"
-msgstr ""
-
-#. module: base
 #: model_terms:ir.ui.view,arch_db:base.view_attachment_search
 msgid "Attached Document Name"
 msgstr "Prisegto dokumento vardas"
@@ -7052,6 +7086,7 @@ msgid "Attached To"
 msgstr "Prisegtas"
 
 #. module: base
+#: model:ir.model,name:base.model_ir_attachment
 #: model_terms:ir.ui.view,arch_db:base.view_attachment_search
 msgid "Attachment"
 msgstr "Prisegtukas"
@@ -7139,11 +7174,6 @@ msgid "Auto Search"
 msgstr "Automatinė paieška"
 
 #. module: base
-#: selection:ir.actions.server,usage:0
-msgid "Automated Action"
-msgstr "Automatinis veiksmas"
-
-#. module: base
 #: model:ir.module.module,shortdesc:base.module_base_automation
 msgid "Automated Action Rules"
 msgstr "Automatinės veiksmo taisyklės "
@@ -7171,7 +7201,7 @@ msgstr "Automatinio sujungimo vedlys"
 #. module: base
 #: model:ir.model,name:base.model_ir_autovacuum
 msgid "Automatic Vacuum"
-msgstr ""
+msgstr "Automatinis siurblys"
 
 #. module: base
 #: code:addons/base/models/ir_module.py:725
@@ -7339,6 +7369,8 @@ msgstr ""
 msgid ""
 "Bank account type: Normal or IBAN. Inferred from the bank account number."
 msgstr ""
+"Banko sąskaitos tipas: įprastas ar IBAN. Nustatytas pagal banko sąskaitos "
+"numerį."
 
 #. module: base
 #: model:ir.model.fields,help:base.field_res_company__bank_ids
@@ -7432,7 +7464,7 @@ msgstr "Bazinės ypatybės"
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_ui_view__arch_base
 msgid "Base View Architecture"
-msgstr ""
+msgstr "Bazinė rodinio arhitektūra"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_base_import
@@ -7484,7 +7516,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_batch_payment
 msgid "Batch Payment"
-msgstr ""
+msgstr "Grupinis mokėjimas"
 
 #. module: base
 #: selection:res.country,name_position:0
@@ -8540,7 +8572,7 @@ msgstr "Sąlyga"
 #. module: base
 #: model:ir.model,name:base.model_res_config
 msgid "Config"
-msgstr ""
+msgstr "Konfig."
 
 #. module: base
 #: model:ir.model,name:base.model_res_config_installer
@@ -8550,7 +8582,7 @@ msgstr ""
 #. module: base
 #: model:ir.model,name:base.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Konfigūracijos nustatymai"
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.config_wizard_step_view_form
@@ -8590,7 +8622,7 @@ msgstr "Darbo apskaitos žiniaraščio pajamavimo konfigūravimas"
 #: model_terms:ir.ui.view,arch_db:base.view_base_module_uninstall
 #: model_terms:ir.ui.view,arch_db:base.view_base_module_upgrade
 msgid "Confirm"
-msgstr "Patikrinti"
+msgstr "Patvirtinti"
 
 #. module: base
 #: model:res.country,name:base.cg
@@ -8720,7 +8752,7 @@ msgstr "Kontaktai ir adresai"
 #. module: base
 #: sql_constraint:res.partner:0
 msgid "Contacts require a name."
-msgstr "Kontaktai reikalauja vardo."
+msgstr "Kontaktams reikia vardo."
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_filters__context
@@ -8876,7 +8908,7 @@ msgstr "Sukūrimo data"
 #. module: base
 #: model:ir.module.module,summary:base.module_crm_reveal
 msgid "Create Leads/Opportunities from your website's traffic"
-msgstr ""
+msgstr "Sukurkite šaltuosius kontaktus/galimybes iš savo svetainės srauto"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.act_menu_create
@@ -8887,11 +8919,6 @@ msgstr "Sukurti meniu"
 #. module: base
 #: model:ir.model,name:base.model_wizard_ir_model_menu_create
 msgid "Create Menu Wizard"
-msgstr ""
-
-#. module: base
-#: selection:ir.actions.server,state:0
-msgid "Create Next Activity"
 msgstr ""
 
 #. module: base
@@ -8912,7 +8939,7 @@ msgstr "Sukurti meniu"
 #. module: base
 #: model_terms:ir.actions.act_window,help:base.action_res_partner_bank_account_form
 msgid "Create a bank account"
-msgstr ""
+msgstr "Sukurti banko sąskaitą"
 
 #. module: base
 #: model_terms:ir.actions.act_window,help:base.action_ui_view_custom
@@ -8937,12 +8964,17 @@ msgstr ""
 #. module: base
 #: model_terms:ir.actions.act_window,help:base.action_partner_category_form
 msgid "Create a new contact tag"
-msgstr ""
+msgstr "Sukurkite naują kontakto žymą"
 
 #. module: base
 #: model_terms:ir.actions.act_window,help:base.action_partner_customer_form
 #: model_terms:ir.actions.act_window,help:base.action_partner_form
 msgid "Create a new customer in your address book"
+msgstr ""
+
+#. module: base
+#: model_terms:ir.actions.act_window,help:base.action_attachment
+msgid "Create a new document"
 msgstr ""
 
 #. module: base
@@ -9529,25 +9561,6 @@ msgid "Days"
 msgstr "Dienos"
 
 #. module: base
-#: model:res.company,overdue_msg:base.main_company
-msgid ""
-"Dear Sir/Madam,\n"
-"\n"
-"Our records indicate that some payments on your account are still due. Please find details below.\n"
-"If the amount has already been paid, please disregard this notice. Otherwise, please forward us the total amount stated below.\n"
-"If you have any queries regarding your account, Please contact us.\n"
-"\n"
-"Thank you in advance for your cooperation.\n"
-"Best Regards,"
-msgstr ""
-"Mūsų duomenys rodo, kad vėluojate atlikti apmokėjimus. Žemiau pateikta informacija apie neapmokėtas sumas.\n"
-"Jeigu mokėjimai jau atlikti, nepaisykite šiuo pranešimo. Kitu atveju, prašome pervesti mums visą žemiau pateiktą mokėtiną sumą.\n"
-"Jeigu iškilo kokių nors klausimų, prašome kreiptis į mus.\n"
-"\n"
-"Iš anksto dėkojame už bendradarbiavimą.\n"
-"Su pagarba,"
-
-#. module: base
 #: model:ir.model.fields,field_description:base.field_ir_mail_server__smtp_debug
 msgid "Debugging"
 msgstr "Klaidų taisymas"
@@ -10067,7 +10080,6 @@ msgid "Doctor"
 msgstr "Daktaras"
 
 #. module: base
-#: model:ir.model,name:base.model_ir_attachment
 #: model_terms:ir.ui.view,arch_db:base.view_base_module_uninstall
 msgid "Document"
 msgstr "Dokumentas"
@@ -10183,7 +10195,7 @@ msgstr "Tiesioginis pristatymas"
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.module_view_kanban
 msgid "Dropdown menu"
-msgstr ""
+msgstr "Išsiskleidžiantis meniu"
 
 #. module: base
 #: code:addons/base/models/res_company.py:18
@@ -10407,11 +10419,6 @@ msgstr "Darbuotojų sutartys"
 #: model:res.partner.category,name:base.res_partner_category_3
 msgid "Employees"
 msgstr "Darbuotojai"
-
-#. module: base
-#: selection:ir.attachment,type:0
-msgid "Empty"
-msgstr ""
 
 #. module: base
 #: code:addons/base/models/ir_model.py:466
@@ -12049,7 +12056,7 @@ msgstr "HTML"
 #. module: base
 #: model:ir.model,name:base.model_ir_http
 msgid "HTTP Routing"
-msgstr ""
+msgstr "HTTP nukreipimas"
 
 #. module: base
 #: model:res.country,name:base.ht
@@ -12096,7 +12103,7 @@ msgstr "Techninės įrangos proxy"
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_partner_bank__qr_code_valid
 msgid "Has all required arguments"
-msgstr ""
+msgstr "Turi visus būtinus argumentus"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_report_paperformat__header_spacing
@@ -12528,11 +12535,6 @@ msgstr "IBAN banko sąskaitos"
 #: model:ir.model.fields,field_description:base.field_wizard_ir_model_menu_create__id
 msgid "ID"
 msgstr "ID"
-
-#. module: base
-#: model:ir.model.fields,help:base.field_ir_actions_server__xml_id
-msgid "ID of the action if defined in a XML file"
-msgstr "Veiksmo ID yra apibrėžtas XML faile"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_model_data__res_id
@@ -13468,7 +13470,7 @@ msgstr "Tikslus planavimas"
 #. module: base
 #: selection:res.company,base_onboarding_company_state:0
 msgid "Just done"
-msgstr ""
+msgstr "Ką tik atlikta"
 
 #. module: base
 #: model:res.partner.industry,full_name:base.res_partner_industry_K
@@ -14145,7 +14147,7 @@ msgstr "Įkelti vertimą"
 #. module: base
 #: model:ir.actions.act_window,name:base.demo_force_install_action
 msgid "Load demo data"
-msgstr ""
+msgstr "Įkelti demo duomenis"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_lang__code
@@ -14278,7 +14280,7 @@ msgstr ""
 #. module: base
 #: model:ir.model,name:base.model_ir_mail_server
 msgid "Mail Server"
-msgstr ""
+msgstr "Pašto serveris"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_test_mail
@@ -14431,6 +14433,8 @@ msgid ""
 "Manage contact tags to better classify them for tracking and analysis "
 "purposes."
 msgstr ""
+"Valdykite kontakto žymas geresniam jų klasifikavimui analizės ir sekimo "
+"tikslais."
 
 #. module: base
 #: model:ir.module.module,summary:base.module_mrp_plm
@@ -14718,7 +14722,7 @@ msgstr ""
 #. module: base
 #: model:ir.model,name:base.model_base_partner_merge_automatic_wizard
 msgid "Merge Partner Wizard"
-msgstr ""
+msgstr "Partnerių sujungimo vedlys"
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.base_partner_merge_automatic_wizard_form
@@ -14733,7 +14737,7 @@ msgstr "Sujungti su rankiniu patikrinimu"
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_logging__message
 msgid "Message"
-msgstr "Pranešimas"
+msgstr "Žinutė"
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.view_users_form
@@ -15022,7 +15026,7 @@ msgstr ""
 #. module: base
 #: model:ir.model,name:base.model_base_module_uninstall
 msgid "Module Uninstall"
-msgstr ""
+msgstr "Modulio ištrynimas"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_view_base_module_update
@@ -15479,7 +15483,7 @@ msgstr "Neinstaliuota"
 #. module: base
 #: selection:res.company,base_onboarding_company_state:0
 msgid "Not done"
-msgstr ""
+msgstr "Neatlikta"
 
 #. module: base
 #: code:addons/base/models/ir_model.py:1407
@@ -17368,7 +17372,7 @@ msgstr "Tėvinis meniu"
 #: model:ir.model.fields,field_description:base.field_ir_ui_menu__parent_path
 #: model:ir.model.fields,field_description:base.field_res_partner_category__parent_path
 msgid "Parent Path"
-msgstr ""
+msgstr "Tėvinis kelias"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_partner__parent_name
@@ -17407,6 +17411,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:base.view_partner_title_tree
 msgid "Partner Titles"
 msgstr "Partnerio kreipiniai"
+
+#. module: base
+#: model:ir.model.fields,field_description:base.field_res_users__active_partner
+msgid "Partner is Active"
+msgstr ""
 
 #. module: base
 #: model:ir.module.module,summary:base.module_website_partner
@@ -18183,7 +18192,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_quotation_builder
 msgid "Quotation Builder"
-msgstr ""
+msgstr "Pasiūlymų kūrimas"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_sale_expense
@@ -18194,12 +18203,12 @@ msgstr ""
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb
 msgid "Qweb"
-msgstr ""
+msgstr "QWEB"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field
 msgid "Qweb Field"
-msgstr ""
+msgstr "QWEB laukas"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_barcode
@@ -18209,27 +18218,27 @@ msgstr ""
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_contact
 msgid "Qweb Field Contact"
-msgstr ""
+msgstr "QWEB kontakto laukas"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_date
 msgid "Qweb Field Date"
-msgstr ""
+msgstr "QWEB lauko data"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_datetime
 msgid "Qweb Field Datetime"
-msgstr ""
+msgstr "QWEB  lauko data"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_duration
 msgid "Qweb Field Duration"
-msgstr ""
+msgstr "QWEB trukmės laukas"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_float
 msgid "Qweb Field Float"
-msgstr ""
+msgstr "QWEB pozicijos laukas"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_float_time
@@ -18239,17 +18248,17 @@ msgstr ""
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_html
 msgid "Qweb Field HTML"
-msgstr ""
+msgstr "QWEB HTML laukas"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_image
 msgid "Qweb Field Image"
-msgstr ""
+msgstr "QWEB lauko paveikslėlis"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_integer
 msgid "Qweb Field Integer"
-msgstr ""
+msgstr "QWEB skaičiaus laukas"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_many2one
@@ -18264,22 +18273,22 @@ msgstr ""
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_relative
 msgid "Qweb Field Relative"
-msgstr ""
+msgstr "QWEB sąryšio laukas"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_selection
 msgid "Qweb Field Selection"
-msgstr ""
+msgstr "QWEB pasirinkimo laukas"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_text
 msgid "Qweb Field Text"
-msgstr ""
+msgstr "QWEB teksto laukas"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_qweb
 msgid "Qweb Field qweb"
-msgstr ""
+msgstr "QWEB QWEB laukas"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_many2many
@@ -18356,6 +18365,7 @@ msgid "Record ID"
 msgstr "Įrašo ID"
 
 #. module: base
+#: model:ir.model,name:base.model_ir_rule
 #: model_terms:ir.ui.view,arch_db:base.view_rule_search
 msgid "Record Rule"
 msgstr "Įrašo taisyklė"
@@ -18621,7 +18631,7 @@ msgstr "Privalomas"
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_attachment__res_model_name
 msgid "Res Model Name"
-msgstr ""
+msgstr "Res modelio pavadinimas"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_crm_partner_assign
@@ -18722,11 +18732,6 @@ msgstr ""
 #, python-format
 msgid "Rounding unit"
 msgstr ""
-
-#. module: base
-#: model:ir.model,name:base.model_ir_rule
-msgid "Rule"
-msgstr "Taisyklė"
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.view_rule_form
@@ -19235,11 +19240,6 @@ msgid "Sell your products online"
 msgstr ""
 
 #. module: base
-#: selection:ir.actions.server,state:0
-msgid "Send Email"
-msgstr "Siųsti el. laišką"
-
-#. module: base
 #: model:ir.module.module,summary:base.module_sign
 msgid "Send documents to sign online and handle filled copies"
 msgstr ""
@@ -19350,7 +19350,6 @@ msgstr "Serveris"
 
 #. module: base
 #: selection:ir.actions.server,usage:0
-#: model:ir.model,name:base.model_ir_actions_server
 #: model_terms:ir.ui.view,arch_db:base.view_server_action_form
 #: model_terms:ir.ui.view,arch_db:base.view_server_action_search
 msgid "Server Action"
@@ -19363,6 +19362,7 @@ msgstr "Serverio veiksmo reikšmės sąsajos"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_server_action
+#: model:ir.model,name:base.model_ir_actions_server
 #: model:ir.ui.menu,name:base.menu_server_action
 #: model_terms:ir.ui.view,arch_db:base.view_server_action_search
 #: model_terms:ir.ui.view,arch_db:base.view_server_action_tree
@@ -20066,7 +20066,7 @@ msgstr "Sirija"
 #. module: base
 #: model:ir.model,name:base.model_ir_config_parameter
 msgid "System Parameter"
-msgstr ""
+msgstr "Sistemos parametrai"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.ir_config_list_action
@@ -20168,7 +20168,7 @@ msgstr "Rodyti langą"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_hr_timesheet
 msgid "Task Logs"
-msgstr ""
+msgstr "Užduočių žurnalai"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_mx_tax_cash_basis
@@ -20778,7 +20778,6 @@ msgstr "Techninis pavadinimas"
 #. module: base
 #: model:ir.module.category,name:base.module_category_hidden
 #: model:ir.module.category,name:base.module_category_technical_settings
-#: model_terms:ir.ui.view,arch_db:base.user_groups_view
 msgid "Technical Settings"
 msgstr "Techniniai nustatymai"
 

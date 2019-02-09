@@ -584,7 +584,7 @@ class PosOrder(models.Model):
         states={'draft': [('readonly', False)]},
     )
 
-    @api.onchange('statement_ids', 'lines', 'lines')
+    @api.onchange('statement_ids', 'lines')
     def _onchange_amount_all(self):
         for order in self:
             currency = order.pricelist_id.currency_id
@@ -593,6 +593,30 @@ class PosOrder(models.Model):
             order.amount_tax = currency.round(sum(self._amount_line_tax(line, order.fiscal_position_id) for line in order.lines))
             amount_untaxed = currency.round(sum(line.price_subtotal for line in order.lines))
             order.amount_total = order.amount_tax + amount_untaxed
+
+    def _compute_batch_amount_all(self):
+        """
+        Does essentially the same thing as `_onchange_amount_all` but only for actually existing records
+        It is intended as a helper method , not as a business one
+        Practical to be used for migrations
+        """
+        amounts = {order_id: {'paid': 0, 'return': 0, 'taxed': 0, 'taxes': 0} for order_id in self.ids}
+        for order in self.env['account.bank.statement.line'].read_group([('pos_statement_id', 'in', self.ids)], ['pos_statement_id', 'amount'], ['pos_statement_id']):
+            amounts[order['pos_statement_id'][0]]['paid'] = order['amount']
+        for order in self.env['account.bank.statement.line'].read_group(['&', ('pos_statement_id', 'in', self.ids), ('amount', '<', 0)], ['pos_statement_id', 'amount'], ['pos_statement_id']):
+            amounts[order['pos_statement_id'][0]]['return'] = order['amount']
+        for order in self.env['pos.order.line'].read_group([('order_id', 'in', self.ids)], ['order_id', 'price_subtotal', 'price_subtotal_incl'], ['order_id']):
+            amounts[order['order_id'][0]]['taxed'] = order['price_subtotal_incl']
+            amounts[order['order_id'][0]]['taxes'] = order['price_subtotal_incl'] - order['price_subtotal']
+
+        for order in self:
+            currency = order.pricelist_id.currency_id
+            order.write({
+                'amount_paid': amounts[order.id]['paid'],
+                'amount_return': amounts[order.id]['return'],
+                'amount_tax': currency.round(amounts[order.id]['taxes']),
+                'amount_total': currency.round(amounts[order.id]['taxed'])
+            })
 
     @api.onchange('partner_id')
     def _onchange_partner_id(self):
@@ -875,21 +899,18 @@ class PosOrder(models.Model):
                 lots_necessary = True
                 if picking_type:
                     lots_necessary = picking_type and picking_type.use_existing_lots
-                qty = 0
                 qty_done = 0
                 pack_lots = []
                 pos_pack_lots = PosPackOperationLot.search([('order_id', '=', order.id), ('product_id', '=', move.product_id.id)])
-                pack_lot_names = [pos_pack.lot_name for pos_pack in pos_pack_lots]
 
-                if pack_lot_names and lots_necessary:
-                    for lot_name in list(set(pack_lot_names)):
-                        stock_production_lot = StockProductionLot.search([('name', '=', lot_name), ('product_id', '=', move.product_id.id)])
+                if pos_pack_lots and lots_necessary:
+                    for pos_pack_lot in pos_pack_lots:
+                        stock_production_lot = StockProductionLot.search([('name', '=', pos_pack_lot.lot_name), ('product_id', '=', move.product_id.id)])
                         if stock_production_lot:
+                            # a serialnumber always has a quantity of 1 product, a lot number takes the full quantity of the order line
+                            qty = 1.0
                             if stock_production_lot.product_id.tracking == 'lot':
-                                # if a lot nr is set through the frontend it will refer to the full quantity
-                                qty = move.product_uom_qty
-                            else: # serial numbers
-                                qty = 1.0
+                                qty = pos_pack_lot.pos_order_line_id.qty
                             qty_done += qty
                             pack_lots.append({'lot_id': stock_production_lot.id, 'qty': qty})
                         else:

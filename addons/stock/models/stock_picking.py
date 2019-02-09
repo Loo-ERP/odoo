@@ -8,6 +8,7 @@ from datetime import date
 
 from itertools import groupby
 from odoo import api, fields, models, _
+from odoo.osv import expression
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from odoo.tools.float_utils import float_compare, float_is_zero, float_round
 from odoo.exceptions import UserError
@@ -121,7 +122,7 @@ class PickingType(models.Model):
         domain = []
         if name:
             domain = ['|', ('name', operator, name), ('warehouse_id.name', operator, name)]
-        picking_ids = self._search(domain + args, limit=limit, access_rights_uid=name_get_uid)
+        picking_ids = self._search(expression.AND([domain, args]), limit=limit, access_rights_uid=name_get_uid)
         return self.browse(picking_ids).name_get()
 
     @api.onchange('code')
@@ -532,6 +533,10 @@ class Picking(models.Model):
     @api.one
     def action_assign_owner(self):
         self.move_line_ids.write({'owner_id': self.owner_id.id})
+
+    def action_assign_partner(self):
+        for picking in self:
+            picking.move_lines.write({'partner_id': picking.partner_id.id})
 
     @api.multi
     def do_print_picking(self):
