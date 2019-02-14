@@ -60,14 +60,17 @@ class AccountInvoice(models.Model):
         self.amount_total = self.amount_untaxed + self.amount_tax
         amount_total_company_signed = self.amount_total
         amount_untaxed_signed = self.amount_untaxed
+        amount_tax_signed = self.amount_tax
         if self.currency_id and self.company_id and self.currency_id != self.company_id.currency_id:
             currency_id = self.currency_id
             amount_total_company_signed = currency_id._convert(self.amount_total, self.company_id.currency_id, self.company_id, self.date_invoice or fields.Date.today())
             amount_untaxed_signed = currency_id._convert(self.amount_untaxed, self.company_id.currency_id, self.company_id, self.date_invoice or fields.Date.today())
+            amount_tax_signed = currency_id._convert(self.amount_tax, self.company_id.currency_id, self.company_id, self.date_invoice or fields.Date.today())
         sign = self.type in ['in_refund', 'out_refund'] and -1 or 1
         self.amount_total_company_signed = amount_total_company_signed * sign
         self.amount_total_signed = self.amount_total * sign
         self.amount_untaxed_signed = amount_untaxed_signed * sign
+        self.amount_tax_signed = amount_tax_signed * sign
 
     @api.onchange('amount_total')
     def _onchange_amount_total(self):
@@ -320,6 +323,8 @@ class AccountInvoice(models.Model):
     amount_untaxed_signed = fields.Monetary(string='Untaxed Amount in Company Currency', currency_field='company_currency_id',
         store=True, readonly=True, compute='_compute_amount')
     amount_tax = fields.Monetary(string='Tax',
+        store=True, readonly=True, compute='_compute_amount')
+    amount_tax_signed = fields.Monetary(string='Tax in Company Currency', currency_field='company_currency_id',
         store=True, readonly=True, compute='_compute_amount')
     amount_total = fields.Monetary(string='Total',
         store=True, readonly=True, compute='_compute_amount')
@@ -1597,13 +1602,15 @@ class AccountInvoiceLine(models.Model):
         if self.invoice_line_tax_ids:
             taxes = self.invoice_line_tax_ids.compute_all(price, currency, self.quantity, product=self.product_id, partner=self.invoice_id.partner_id)
         self.price_subtotal = price_subtotal_signed = taxes['total_excluded'] if taxes else self.quantity * price
-        self.price_total = taxes['total_included'] if taxes else self.price_subtotal
+        self.price_total = price_total_signed = taxes['total_included'] if taxes else self.price_subtotal
         if self.invoice_id.currency_id and self.invoice_id.currency_id != self.invoice_id.company_id.currency_id:
             currency = self.invoice_id.currency_id
             date = self.invoice_id._get_currency_rate_date()
             price_subtotal_signed = currency._convert(price_subtotal_signed, self.invoice_id.company_id.currency_id, self.company_id or self.env.user.company_id, date or fields.Date.today())
+            price_total_signed = currency._convert(price_total_signed, self.invoice_id.company_id.currency_id, self.company_id or self.env.user.company_id, date or fields.Date.today())
         sign = self.invoice_id.type in ['in_refund', 'out_refund'] and -1 or 1
         self.price_subtotal_signed = price_subtotal_signed * sign
+        self.price_total_signed = price_total_signed * sign
 
     @api.model
     def _default_account(self):
@@ -1638,7 +1645,10 @@ class AccountInvoiceLine(models.Model):
         store=True, readonly=True, compute='_compute_price', help="Total amount without taxes")
     price_total = fields.Monetary(string='Amount (with Taxes)',
         store=True, readonly=True, compute='_compute_price', help="Total amount with taxes")
-    price_subtotal_signed = fields.Monetary(string='Amount Signed', currency_field='company_currency_id',
+    price_subtotal_signed = fields.Monetary(string='Amount Signed(without Taxes)', currency_field='company_currency_id',
+        store=True, readonly=True, compute='_compute_price',
+        help="Total amount without Taxes in the currency of the company, negative for credit note.")
+    price_total_signed = fields.Monetary(string='Amount Signed', currency_field='company_currency_id',
         store=True, readonly=True, compute='_compute_price',
         help="Total amount in the currency of the company, negative for credit note.")
     price_tax = fields.Monetary(string='Tax Amount', compute='_get_price_tax', store=False)
