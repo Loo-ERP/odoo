@@ -362,9 +362,9 @@
                                     <field name="amount_untaxed"/>
                                     <field name="amount_tax"/>
                                     <field name="amount_total" class="oe_subtotal_footer_separator"/>
-                                    <field name="amount_untaxed_signed" groups="base.group_multi_currency"/>
-                                    <field name="amount_tax_signed" groups="base.group_multi_currency"/>
-                                    <field name="amount_total_company_signed" groups="base.group_multi_currency" class="oe_subtotal_footer_separator"/>
+                                    <field name="amount_untaxed_signed" invisible="1" groups="base.group_multi_currency"/>
+                                    <field name="amount_tax_signed" invisible="1" groups="base.group_multi_currency"/>
+                                    <field name="amount_total_company_signed" invisible="1" groups="base.group_multi_currency" class="oe_subtotal_footer_separator"/>
                                     <field name="payments_widget" colspan="2" nolabel="1" widget="payment"/>
                                     <field name="residual" class="oe_subtotal_footer_separator" attrs="{'invisible': [('state', '=', 'draft')]}"/>
                                     <field name="reconciled" invisible="1"/>
@@ -577,9 +577,9 @@
                                 <field name="amount_untaxed"/>
                                 <field name="amount_tax"/>
                                 <field name="amount_total" class="oe_subtotal_footer_separator"/>
-                                <field name="amount_untaxed_signed" groups="base.group_multi_currency"/>
-                                <field name="amount_tax_signed" groups="base.group_multi_currency"/>
-                                <field name="amount_total_company_signed" groups="base.group_multi_currency" class="oe_subtotal_footer_separator"/>
+                                <field name="amount_untaxed_signed" invisible="1" groups="base.group_multi_currency"/>
+                                <field name="amount_tax_signed" invisible="1" groups="base.group_multi_currency"/>
+                                <field name="amount_total_company_signed" invisible="1" groups="base.group_multi_currency" class="oe_subtotal_footer_separator"/>
                                 <field name="payments_widget" colspan="2" nolabel="1" widget="payment"/>
                                 <field name="residual" class="oe_subtotal_footer_separator" attrs="{'invisible': [('state', '=', 'draft')]}"/>
                                 <field name="reconciled" invisible="1"/>
