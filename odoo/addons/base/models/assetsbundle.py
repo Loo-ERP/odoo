@@ -605,7 +605,7 @@ class WebAsset(object):
     @func.lazy_property
     def name(self):
         name = '<inline asset>' if self.inline else self.url
-        return "%s defined in bundle '%s'" % (name, self.bundle.name)
+        return "%s defined in bundle '%s'" % (name.replace('enterprise', 'flectra'), self.bundle.name.replace('enterprise', 'flectra'))
 
     @property
     def html_url(self):
