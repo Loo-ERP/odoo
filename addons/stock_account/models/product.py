@@ -348,7 +348,7 @@ class ProductProduct(models.Model):
         return []
 
     def _get_anglo_saxon_price_unit(self, uom=False):
-        price = self.standard_price
+        price = self.get_history_price(self.env.context.get('force_company') or self.env.user.company_id.id, self.env.context.get('history_date')) or self.standard_price
         if not self or not uom or self.uom_id.id == uom.id:
             return price or 0.0
         return self.uom_id._compute_price(price, uom)

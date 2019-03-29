@@ -271,13 +271,13 @@ class PosOrder(models.Model):
         have_to_group_by = session and session.config_id.group_by or False
         rounding_method = session and session.config_id.company_id.tax_calculation_rounding_method
 
-        def add_anglosaxon_lines(grouped_data):
+        def add_anglosaxon_lines(grouped_data, date_order, company_id):
             Product = self.env['product.product']
             Analytic = self.env['account.analytic.account']
             for product_key in list(grouped_data.keys()):
                 if product_key[0] == "product":
                     for line in grouped_data[product_key]:
-                        product = Product.browse(line['product_id'])
+                        product = Product.browse(line['product_id']).with_context(history_date=date_order, force_company=company_id)
                         # In the SO part, the entries will be inverted by function compute_invoice_totals
                         price_unit = self._get_pos_anglo_saxon_price_unit(product, line['partner_id'], line['quantity'])
                         account_analytic = Analytic.browse(line.get('analytic_account_id'))
@@ -458,7 +458,7 @@ class PosOrder(models.Model):
             order.write({'state': 'done', 'account_move': move.id})
 
             if self and order.company_id.anglo_saxon_accounting:
-                add_anglosaxon_lines(grouped_data)
+                add_anglosaxon_lines(grouped_data, order.date_order, order.company_id.id)
     
             all_lines = []
             for group_key, group_data in grouped_data.items():
