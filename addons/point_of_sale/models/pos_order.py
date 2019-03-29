@@ -287,11 +287,13 @@ class PosOrder(models.Model):
                             account_analytic=account_analytic)
                     if res:
                         line1, line2 = res
+                        line1['tax_ids'] = line['tax_ids']
+                        line2['tax_ids'] = line['tax_ids']
                         line1 = Product._convert_prepared_anglosaxon_line(line1, order.partner_id)
-                        insert_data('counter_part', line1)
+                        insert_data('product', line1)
 
                         line2 = Product._convert_prepared_anglosaxon_line(line2, order.partner_id)
-                        insert_data('counter_part', line2)
+                        insert_data('product', line2)
 
         for order in self.filtered(lambda o: not o.account_move or o.state == 'paid'):
             current_company = order.sale_journal.company_id
