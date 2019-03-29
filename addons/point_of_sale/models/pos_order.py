@@ -288,23 +288,10 @@ class PosOrder(models.Model):
                     if res:
                         line1, line2 = res
                         line1 = Product._convert_prepared_anglosaxon_line(line1, order.partner_id)
-                        insert_data('counter_part', {
-                            'name': line1['name'],
-                            'account_id': line1['account_id'],
-                            'credit': line1['credit'] or 0.0,
-                            'debit': line1['debit'] or 0.0,
-                            'partner_id': line1['partner_id']
-
-                        })
+                        insert_data('counter_part', line1)
 
                         line2 = Product._convert_prepared_anglosaxon_line(line2, order.partner_id)
-                        insert_data('counter_part', {
-                            'name': line2['name'],
-                            'account_id': line2['account_id'],
-                            'credit': line2['credit'] or 0.0,
-                            'debit': line2['debit'] or 0.0,
-                            'partner_id': line2['partner_id']
-                        })
+                        insert_data('counter_part', line2)
 
         for order in self.filtered(lambda o: not o.account_move or o.state == 'paid'):
             current_company = order.sale_journal.company_id
@@ -486,6 +473,33 @@ class PosOrder(models.Model):
             move = None
             grouped_data  = {}
         return True
+    
+    def _anglo_saxon_reconcile_valuation(self):
+        """ Reconciles the entries made in the interim accounts in anglosaxon accounting,
+        reconciling stock valuation move lines with the invoice's.
+        """
+        for order in self:
+            if order.company_id.anglo_saxon_accounting:
+                stock_moves = order.picking_id.move_lines.filtered(lambda x: x.state == 'done')
+                for prod in order.mapped('lines.product_id'):
+                    if prod.valuation == 'real_time' and stock_moves:
+                        # We first get the orders move lines (taking the order and the previous ones into account)...
+                        product_interim_account = prod.product_tmpl_id._get_product_accounts()['stock_output']
+                        to_reconcile = self.env['account.move.line'].search([
+                            ('move_id', '=', order.account_move.id),
+                            ('product_id', '=', prod.id),
+                            ('account_id','=', product_interim_account.id),
+                            ('reconciled','=', False)
+                        ])
+
+                        # And then the stock valuation ones.
+                        product_stock_moves = stock_moves.filtered(lambda s: s.product_id.id == prod.id)
+                        for valuation_line in product_stock_moves.mapped('account_move_ids.line_ids'):
+                            if valuation_line.account_id == product_interim_account and not valuation_line.reconciled:
+                                to_reconcile += valuation_line
+
+                        if to_reconcile:
+                            to_reconcile.reconcile()
 
     def _get_pos_anglo_saxon_price_unit(self, product, partner_id, quantity):
         price_unit = product._get_anglo_saxon_price_unit()

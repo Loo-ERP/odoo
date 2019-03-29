@@ -41,6 +41,7 @@ class PosSession(models.Model):
                 order.action_pos_order_done()
             orders_to_reconcile = session.order_ids._filtered_for_reconciliation()
             orders_to_reconcile.sudo()._reconcile_payments()
+            orders_to_reconcile.sudo()._anglo_saxon_reconcile_valuation()
 
     config_id = fields.Many2one(
         'pos.config', string='Point of Sale',
