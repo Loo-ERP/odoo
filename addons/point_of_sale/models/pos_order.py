@@ -276,24 +276,24 @@ class PosOrder(models.Model):
             Analytic = self.env['account.analytic.account']
             for product_key in list(grouped_data.keys()):
                 if product_key[0] == "product":
-                    line = grouped_data[product_key][0]
-                    product = Product.browse(line['product_id'])
-                    # In the SO part, the entries will be inverted by function compute_invoice_totals
-                    price_unit = self._get_pos_anglo_saxon_price_unit(product, line['partner_id'], line['quantity'])
-                    account_analytic = Analytic.browse(line.get('analytic_account_id'))
-                    res = Product._anglo_saxon_sale_move_lines(
-                        line['name'], product, product.uom_id, line['quantity'], price_unit,
-                            fiscal_position=order.fiscal_position_id,
-                            account_analytic=account_analytic)
-                    if res:
-                        line1, line2 = res
-                        line1['tax_ids'] = line['tax_ids']
-                        line2['tax_ids'] = line['tax_ids']
-                        line1 = Product._convert_prepared_anglosaxon_line(line1, order.partner_id)
-                        insert_data('product', line1)
-
-                        line2 = Product._convert_prepared_anglosaxon_line(line2, order.partner_id)
-                        insert_data('product', line2)
+                    for line in grouped_data[product_key]:
+                        product = Product.browse(line['product_id'])
+                        # In the SO part, the entries will be inverted by function compute_invoice_totals
+                        price_unit = self._get_pos_anglo_saxon_price_unit(product, line['partner_id'], line['quantity'])
+                        account_analytic = Analytic.browse(line.get('analytic_account_id'))
+                        res = Product._anglo_saxon_sale_move_lines(
+                            line['name'], product, product.uom_id, line['quantity'], price_unit,
+                                fiscal_position=order.fiscal_position_id,
+                                account_analytic=account_analytic)
+                        if res:
+                            line1, line2 = res
+                            line1['tax_ids'] = line['tax_ids']
+                            line2['tax_ids'] = line['tax_ids']
+                            line1 = Product._convert_prepared_anglosaxon_line(line1, order.partner_id)
+                            insert_data('product', line1)
+    
+                            line2 = Product._convert_prepared_anglosaxon_line(line2, order.partner_id)
+                            insert_data('product', line2)
 
         for order in self.filtered(lambda o: not o.account_move or o.state == 'paid'):
             current_company = order.sale_journal.company_id
