@@ -532,9 +532,12 @@ class SaleOrder(models.Model):
                     continue
                 if line.display_type == 'line_note':
                     previous_line = order.order_line[counter-2] if counter > 1 else self.env['sale.order.line'].browse()
-                    if previous_line and previous_line.qty_invoiced > 0 or (previous_line.qty_invoiced < 0 and final):
+                    if previous_line and previous_line.qty_to_invoice > 0 or (previous_line.qty_to_invoice < 0 and final):
                         if not line.invoice_lines:
-                            line.invoice_line_create(invoices[group_key].id, line.qty_to_invoice)
+                            line_vals_list.extend(line.invoice_line_create_vals(
+                                invoices[group_key].id,
+                                line.qty_to_invoice
+                            ))
                     continue
                 if float_is_zero(line.qty_to_invoice, precision_digits=precision):
                     continue
