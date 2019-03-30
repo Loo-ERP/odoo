@@ -326,6 +326,12 @@ class ProductTemplate(models.Model):
             raise ValidationError(_('The default Unit of Measure and the purchase Unit of Measure must be in the same category.'))
         return True
 
+    @api.constrains('attribute_line_ids')
+    def _check_attribute_line(self):
+        if any(len(template.attribute_line_ids) != len(template.attribute_line_ids.mapped('attribute_id')) for template in self):
+            raise ValidationError(_('You cannot define two attribute lines for the same attribute.'))
+        return True
+
     @api.onchange('uom_id')
     def _onchange_uom_id(self):
         if self.uom_id:
@@ -730,6 +736,19 @@ class ProductTemplate(models.Model):
         self.ensure_one()
         if not parent_combination:
             return []
+
+        # Search for exclusions without attribute value. This means that the template is not
+        # compatible with the parent combination. If such an exclusion is found, it means that all
+        # attribute values are excluded.
+        if parent_combination:
+            exclusions = self.env['product.template.attribute.exclusion'].search([
+                ('product_tmpl_id', '=', self.id),
+                ('value_ids', '=', False),
+                ('product_template_attribute_value_id', 'in', parent_combination.ids),
+            ], limit=1)
+            if exclusions:
+                return self.mapped('attribute_line_ids.product_template_value_ids').ids
+
         return [
             value_id
             for filter_line in parent_combination.mapped('exclude_for').filtered(

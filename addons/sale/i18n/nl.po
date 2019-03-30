@@ -844,7 +844,7 @@ msgstr ""
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.sale_onboarding_order_confirmation_step
 msgid "Choose how to confirm quotations and get paid."
-msgstr "Kies how offertes te bevestigen en betaald te krijgen."
+msgstr "Kies hoe offertes te bevestigen en betaald te krijgen."
 
 #. module: sale
 #. openerp-web
@@ -1287,11 +1287,6 @@ msgstr "Omschrijving"
 #: model_terms:ir.ui.view,arch_db:sale.sale_order_portal_content
 msgid "Details"
 msgstr "Details"
-
-#. module: sale
-#: model:ir.model.fields,field_description:sale.field_res_config_settings__module_website_sale_digital
-msgid "Digital Content"
-msgstr "Digitale inhoud"
 
 #. module: sale
 #: model:ir.model.fields,field_description:sale.field_sale_report__discount
@@ -2236,8 +2231,8 @@ msgid ""
 "Once the quotation is confirmed by the customer, it becomes a sales "
 "order.<br> You will be able to create an invoice and collect the payment."
 msgstr ""
-"Eenmaal de offerte bevestigd is door de klant wordt het een "
-"verkooporder.<br>U kan daarna er een factuur van maken en de betaling "
+"Als de offerte wordt bevestigd door de klant wordt het een "
+"verkooporder.<br>U kunt er daarna een factuur van maken en de betaling "
 "verwerken."
 
 #. module: sale
@@ -2246,8 +2241,8 @@ msgid ""
 "Once the quotation is confirmed, it becomes a sales order.<br> You will be "
 "able to create an invoice and collect the payment."
 msgstr ""
-"Eenmaal de offerte bevestigd, wordt het een verkooporder.<br>U kan daarna er"
-" een factuur van maken en de betaling verwerken."
+"Als u de offerte bevestigd, dan wordt het een verkooporder.<br>U kunt er "
+"daarna een factuur van maken en de betaling verwerken."
 
 #. module: sale
 #. openerp-web
