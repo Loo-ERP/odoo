@@ -1775,8 +1775,11 @@ exports.Orderline = Backbone.Model.extend({
             total_included: round_pr(total_included, currency_rounding_bak)
         };
     },
+    get_price_reduce: function(){
+    	return this.get_unit_price() * (1.0 - (this.get_discount() / 100.0));
+    },
     get_all_prices: function(){
-        var price_unit = this.get_unit_price() * (1.0 - (this.get_discount() / 100.0));
+        var price_unit = this.get_price_reduce();
         var taxtotal = 0;
 
         var product =  this.get_product();
