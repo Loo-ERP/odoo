@@ -34,7 +34,7 @@ class ProductTemplate(models.Model):
         ('delivery', 'Delivered quantities')], string='Invoicing Policy',
         help='Ordered Quantity: Invoice quantities ordered by the customer.\n'
              'Delivered Quantity: Invoice quantities delivered to the customer.',
-        default='delivery')
+        default='order')
 
     @api.multi
     def _compute_hide_expense_policy(self):
