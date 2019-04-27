@@ -311,11 +311,13 @@ var ListRenderer = BasicRenderer.extend({
         var name = node.attrs.name;
         var field = this.state.fields[name];
         var value = record.data[name];
-        var formattedValue = field_utils.format[field.type](value, field, {
+        var fieldsInfo = record.fieldsInfo[this.viewType];
+        var attrs = (fieldsInfo && fieldsInfo[name]) || {};
+        var formattedValue = field_utils.format[field.type](value, field, _.extend(attrs.options || {}, {
             data: record.data,
             escape: true,
             isPassword: 'password' in node.attrs,
-        });
+        }));
         this._handleAttributes($td, node);
         return $td.html(formattedValue);
     },
