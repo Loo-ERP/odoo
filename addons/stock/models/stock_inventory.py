@@ -5,6 +5,9 @@ from odoo import api, fields, models, _
 from odoo.addons import decimal_precision as dp
 from odoo.exceptions import UserError, ValidationError
 from odoo.tools import float_utils, float_compare
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 class Inventory(models.Model):
@@ -184,9 +187,12 @@ class Inventory(models.Model):
         negative = next((line for line in self.mapped('line_ids') if line.product_qty < 0 and line.product_qty != line.theoretical_qty), False)
         if negative:
             raise UserError(_('You cannot set a negative product quantity in an inventory line:\n\t%s - qty: %s') % (negative.product_id.name, negative.product_qty))
+        _logger.info("Empezando ajuste de inventario")
         self.action_check()
+        _logger.info("Terminada creacion de ajustes, se validara ajuste, por favor espere...")
         self.write({'state': 'done'})
         self.post_inventory()
+        _logger.info("Validacion de ajuste terminada")
         return True
 
     def post_inventory(self):
@@ -457,7 +463,11 @@ class InventoryLine(models.Model):
 
     def _generate_moves(self):
         vals_list = []
+        total_count = len(self)
+        count = 0
         for line in self:
+            count += 1
+            _logger.info("Procesando linea %s de %s", count, total_count)
             if float_utils.float_compare(line.theoretical_qty, line.product_qty, precision_rounding=line.product_id.uom_id.rounding) == 0:
                 continue
             diff = line.theoretical_qty - line.product_qty
