@@ -476,4 +476,4 @@ class InventoryLine(models.Model):
             else:
                 vals = line._get_move_values(abs(diff), line.location_id.id, line.product_id.property_stock_inventory.id, True)
             vals_list.append(vals)
-        return self.env['stock.move'].create(vals_list)
+        return self.env['stock.move'].with_context(mail_notrack=True).create(vals_list)
