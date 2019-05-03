@@ -383,9 +383,14 @@ class StockMove(models.Model):
     def _action_done(self):
         self.product_price_update_before_done()
         res = super(StockMove, self)._action_done()
+        _logger = logging.getLogger(__name__)
+        total_count = len(res)
+        count = 0
         for move in res:
             # Apply restrictions on the stock move to be able to make
             # consistent accounting entries.
+            count += 1
+            _logger.info("Calculando Valoracion de Movimiento de stock %s de %s, origen: %s, destino: %s", count, total_count, move.location_id.display_name, move.location_dest_id.display_name)
             if move._is_in() and move._is_out():
                 raise UserError(_("The move lines are not in a consistent state: some are entering and other are leaving the company."))
             company_src = move.mapped('move_line_ids.location_id.company_id')
@@ -400,8 +405,14 @@ class StockMove(models.Model):
             if company_src and company_dst and company_src.id != company_dst.id:
                 raise UserError(_("The move lines are not in a consistent states: they are doing an intercompany in a single step while they should go through the intercompany transit location."))
             move._run_valuation()
+        _logger.info("Calculo de Valoracion de movimientos de stock terminada")
+        total_count = len(res)
+        count = 0
         for move in res.filtered(lambda m: m.product_id.valuation == 'real_time' and (m._is_in() or m._is_out() or m._is_dropshipped() or m._is_dropshipped_returned())):
+            count += 1
+            _logger.info("Creando asiento contable de Movimiento de stock %s de %s, origen: %s, destino: %s", count, total_count, move.location_id.display_name, move.location_dest_id.display_name)
             move._account_entry_move()
+        _logger.info("Creacion de asiento contable de movimientos de stock terminada")
         return res
 
     @api.multi
