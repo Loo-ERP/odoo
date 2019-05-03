@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+import logging
 from collections import Counter
 
 from odoo import api, fields, models, _
@@ -9,6 +10,7 @@ from odoo.exceptions import UserError, ValidationError
 from odoo.tools.pycompat import izip
 from odoo.tools.float_utils import float_round, float_compare, float_is_zero
 
+_logger = logging.getLogger(__name__)
 
 class StockMoveLine(models.Model):
     _name = "stock.move.line"
@@ -414,7 +416,12 @@ class StockMoveLine(models.Model):
 
         # Now, we can actually move the quant.
         done_ml = self.env['stock.move.line']
+        _logger = logging.getLogger(__name__)
+        total_count = len(self)
+        count = 0
         for ml in self - ml_to_delete:
+            count += 1
+            _logger.info("Procesando Movimiento de stock %s de %s, origen: %s, destino: %s", count, total_count, ml.location_id.display_name, ml.location_dest_id.display_name)
             if ml.product_id.type == 'product':
                 rounding = ml.product_uom_id.rounding
 
@@ -441,6 +448,7 @@ class StockMoveLine(models.Model):
                         Quant._update_available_quantity(ml.product_id, ml.location_id, taken_from_untracked_qty, lot_id=ml.lot_id, package_id=ml.package_id, owner_id=ml.owner_id)
                 Quant._update_available_quantity(ml.product_id, ml.location_dest_id, quantity, lot_id=ml.lot_id, package_id=ml.result_package_id, owner_id=ml.owner_id, in_date=in_date)
             done_ml |= ml
+        _logger.info("Validacion de movimientos de stock terminada")
         # Reset the reserved quantity as we just moved it to the destination location.
         (self - ml_to_delete).with_context(bypass_reservation_update=True).write({
             'product_uom_qty': 0.00,
