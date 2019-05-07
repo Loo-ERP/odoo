@@ -77,7 +77,7 @@ sAnimation.registry.newsletter_popup = sAnimation.Class.extend({
         if ($modal.is('.modal-dialog')) {
             $modal.removeClass('modal-md modal-dialog');
             var $modalContent = $modal.find('.modal-content');
-            $modalContent.wrapAll($('<div/>', {class: 'modal-dialog'}));
+            $modalContent.wrapAll($('<div/>', {class: 'modal-dialog modal-lg'}));
         }
 
         var popupcontent = self.$target.find(".o_popup_content_dev").empty();
