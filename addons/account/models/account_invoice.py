@@ -1212,6 +1212,16 @@ class AccountInvoice(models.Model):
             for key, val in line2.items():
                 line.append((0, 0, val))
         return line
+    
+    @api.multi
+    def _prepare_account_move(self, line, date):
+        return {
+            'ref': self.reference,
+            'line_ids': line,
+            'journal_id': self.journal_id.id,
+            'date': date,
+            'narration': self.comment,
+        }
 
     @api.multi
     def action_move_create(self):
@@ -1284,13 +1294,7 @@ class AccountInvoice(models.Model):
             line = inv.finalize_invoice_move_lines(line)
 
             date = inv.date or inv.date_invoice
-            move_vals = {
-                'ref': inv.reference,
-                'line_ids': line,
-                'journal_id': inv.journal_id.id,
-                'date': date,
-                'narration': inv.comment,
-            }
+            move_vals = inv._prepare_account_move(line, date)
             move = account_move.create(move_vals)
             # Pass invoice in method post: used if you want to get the same
             # account move reference when creating the same invoice after a cancelled one:
