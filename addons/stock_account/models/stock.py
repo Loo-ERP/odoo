@@ -4,6 +4,7 @@
 from collections import defaultdict
 
 from odoo import api, fields, models, _
+import odoo.addons.decimal_precision as dp
 from odoo.exceptions import UserError
 from odoo.tools import float_compare, float_round, float_is_zero, pycompat
 
@@ -295,8 +296,11 @@ class StockMove(models.Model):
 
         # Update the standard price with the price of the last used candidate, if any.
         if new_standard_price and move.product_id.cost_method == 'fifo':
-            move.product_id.sudo().with_context(force_company=move.company_id.id) \
-                .standard_price = new_standard_price
+            precision_digits = dp.get_precision('Product Price')(self.env.cr)
+            precision_digits = precision_digits and precision_digits[1] or 2
+            if float_compare(move.product_id.standard_price, new_standard_price, precision_digits=precision_digits) != 0:
+                move.product_id.sudo().with_context(force_company=move.company_id.id) \
+                    .standard_price = new_standard_price
 
         # If there's still quantity to value but we're out of candidates, we fall in the
         # negative stock use case. We chose to value the out move at the price of the
