@@ -54,7 +54,7 @@ class HrPayslip(models.Model):
     @api.multi
     def _prepare_analytic_account(self, line):
         '''This method is designed to be inherited in a custom module'''
-        return line.salary_rule_id.analytic_account_id.id
+        return line.salary_rule_id.analytic_account_id.id or slip.contract_id.analytic_account_id.id
 
     @api.multi
     def action_payslip_done(self):

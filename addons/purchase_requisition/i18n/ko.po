@@ -252,7 +252,7 @@ msgstr "내용"
 #: model:ir.model.fields,field_description:purchase_requisition.field_purchase_requisition_line__display_name
 #: model:ir.model.fields,field_description:purchase_requisition.field_purchase_requisition_type__display_name
 msgid "Display Name"
-msgstr "이름 표시"
+msgstr "제목"
 
 #. module: purchase_requisition
 #: selection:purchase.requisition.type,line_copy:0
@@ -460,7 +460,7 @@ msgstr "읽지 않은 메시지 수"
 #: selection:purchase.requisition,state:0
 #: selection:purchase.requisition,state_blanket_order:0
 msgid "Ongoing"
-msgstr ""
+msgstr "진행중"
 
 #. module: purchase_requisition
 #: model:ir.model.fields,field_description:purchase_requisition.field_purchase_requisition__picking_type_id
