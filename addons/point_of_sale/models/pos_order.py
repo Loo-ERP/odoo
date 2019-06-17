@@ -229,6 +229,9 @@ class PosOrder(models.Model):
             'name': inv_name,
         }
         return inv_line
+    
+    def _set_fields_aditionals_invoice_line(self, line, invoice_id, inv_line):
+        return inv_line
         
     def _action_create_invoice_line(self, line=False, invoice_id=False):
         InvoiceLine = self.env['account.invoice.line']
@@ -242,6 +245,7 @@ class PosOrder(models.Model):
         # bridge between old and new api
         inv_line = invoice_line._convert_to_write({name: invoice_line[name] for name in invoice_line._cache})
         inv_line.update(price_unit=line.price_unit, discount=line.discount, name=inv_name)
+        inv_line = self._set_fields_aditionals_invoice_line(line, invoice_id, inv_line)
         return InvoiceLine.sudo().create(inv_line)
 
     def _create_account_move_line(self, session=None, move=None):
