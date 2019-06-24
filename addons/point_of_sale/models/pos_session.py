@@ -210,7 +210,7 @@ class PosSession(models.Model):
                 'journal_id': journal.id,
                 'user_id': self.env.user.id,
                 'name': pos_name,
-                'balance_start': self.env["account.bank.statement"]._get_opening_balance(journal.id)
+                #'balance_start': self.env["account.bank.statement"]._get_opening_balance(journal.id)
             }
 
             statements.append(ABS.with_context(ctx).sudo(uid).create(st_values).id)
