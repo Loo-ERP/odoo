@@ -270,12 +270,16 @@ class HrExpense(models.Model):
                 raise UserError(_("No Home Address found for the employee %s, please configure one.") % (self.employee_id.name))
             account_dest = self.employee_id.address_home_id.property_account_payable_id.id
         return account_dest
+    
+    @api.multi
+    def _get_move_line_name(self):
+        return self.employee_id.name + ': ' + self.name.split('\n')[0][:64]
 
     @api.multi
     def _get_account_move_line_values(self):
         move_line_values_by_expense = {}
         for expense in self:
-            move_line_name = expense.employee_id.name + ': ' + expense.name.split('\n')[0][:64]
+            move_line_name = expense._get_move_line_name()
             account_src = expense._get_expense_account_source()
             account_dst = expense._get_expense_account_destination()
             account_date = expense.sheet_id.accounting_date or expense.date or fields.Date.context_today(expense)
@@ -354,6 +358,23 @@ class HrExpense(models.Model):
 
             move_line_values_by_expense[expense.id] = move_line_values
         return move_line_values_by_expense
+    
+    @api.multi
+    def _prepare_payment_vals(self, journal, different_currency, total_amount, total_amount_currency):
+        payment_methods = journal.outbound_payment_method_ids if total_amount < 0 else journal.inbound_payment_method_ids
+        journal_currency = journal.currency_id or journal.company_id.currency_id
+        return {
+            'payment_method_id': payment_methods and payment_methods[0].id or False,
+            'payment_type': 'outbound' if total_amount < 0 else 'inbound',
+            'partner_id': self.employee_id.address_home_id.commercial_partner_id.id,
+            'partner_type': 'supplier',
+            'journal_id': journal.id,
+            'payment_date': self.date,
+            'state': 'reconciled',
+            'currency_id': self.currency_id.id if different_currency else journal_currency.id,
+            'amount': abs(total_amount_currency) if different_currency else abs(total_amount),
+            'communication': self.name,
+        }
 
     @api.multi
     def action_move_create(self):
@@ -383,20 +404,10 @@ class HrExpense(models.Model):
                     raise UserError(_("No credit account found for the %s journal, please configure one.") % (expense.sheet_id.bank_journal_id.name))
                 journal = expense.sheet_id.bank_journal_id
                 # create payment
-                payment_methods = journal.outbound_payment_method_ids if total_amount < 0 else journal.inbound_payment_method_ids
-                journal_currency = journal.currency_id or journal.company_id.currency_id
-                payment = self.env['account.payment'].create({
-                    'payment_method_id': payment_methods and payment_methods[0].id or False,
-                    'payment_type': 'outbound' if total_amount < 0 else 'inbound',
-                    'partner_id': expense.employee_id.address_home_id.commercial_partner_id.id,
-                    'partner_type': 'supplier',
-                    'journal_id': journal.id,
-                    'payment_date': expense.date,
-                    'state': 'reconciled',
-                    'currency_id': expense.currency_id.id if different_currency else journal_currency.id,
-                    'amount': abs(total_amount_currency) if different_currency else abs(total_amount),
-                    'name': expense.name,
-                })
+                payment_vals = expense._prepare_payment_vals(journal, different_currency, total_amount, total_amount_currency)
+                payment = self.env['account.payment'].create(payment_vals)
+                if not payment.name:
+                    payment.get_payment_name()
                 move_line_dst['payment_id'] = payment.id
 
             # link move lines to move, and move to expense sheet
