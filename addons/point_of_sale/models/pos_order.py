@@ -244,7 +244,7 @@ class PosOrder(models.Model):
         # We convert a new id object back to a dictionary to write to
         # bridge between old and new api
         inv_line = invoice_line._convert_to_write({name: invoice_line[name] for name in invoice_line._cache})
-        inv_line.update(price_unit=line.price_unit, discount=line.discount, name=inv_name)
+        inv_line.update(price_unit=line.price_unit, discount=line.discount)
         inv_line = self._set_fields_aditionals_invoice_line(line, invoice_id, inv_line)
         return InvoiceLine.sudo().create(inv_line)
 
