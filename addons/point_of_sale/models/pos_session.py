@@ -206,11 +206,12 @@ class PosSession(models.Model):
             # account.bank.statement to set the opening balance of the
             # newly created bank statement
             ctx['journal_id'] = journal.id if pos_config.cash_control and journal.type == 'cash' else False
+            ctx['pos_config_id'] = pos_config.id
             st_values = {
                 'journal_id': journal.id,
                 'user_id': self.env.user.id,
                 'name': pos_name,
-                'balance_start': self.env["account.bank.statement"]._get_opening_balance(journal.id) if journal.type == 'cash' else 0
+                'balance_start': ABS.with_context(ctx)._get_opening_balance(journal.id) if journal.type == 'cash' else 0
             }
 
             statements.append(ABS.with_context(ctx).sudo(uid).create(st_values).id)
