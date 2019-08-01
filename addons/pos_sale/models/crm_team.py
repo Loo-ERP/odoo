@@ -87,7 +87,15 @@ class CrmTeam(models.Model):
                 )
                 if self.dashboard_graph_group_pos == 'day':
                     for data_point in order_data:
-                        result.append({'x_value': fields.Date.to_date(datetime.strptime(data_point.get('date:day'), "%d %b %Y")), 'y_value': data_point.get('price_total')})
+                        try:
+                            value_date = fields.Date.to_date(datetime.strptime(data_point.get('date:day'), "%d %b %Y"))
+                        except ValueError:
+                            date_str = data_point.get('date:day')
+                            if self.env.context.get('lang') and self.env.context.get('lang').startswith("es"):
+                                for month_diff in [('Jan', 'Ene'), ('Apr', 'Abr'), ('Aug', 'Ago'), ('Dec', 'Dic')]:
+                                    date_str = date_str.replace(month_diff[0], month_diff[1])
+                            value_date = fields.Date.to_date(datetime.strptime(date_str, "%d %b %Y"))
+                        result.append({'x_value': value_date, 'y_value': data_point.get('price_total')})
                 elif self.dashboard_graph_group_pos == 'week':
                     for data_point in order_data:
                         result.append({'x_value': int(data_point.get('date:week')[1:3]), 'y_value': data_point.get('price_total')})
