@@ -160,6 +160,29 @@ class HrPayslip(models.Model):
         return True
 
     @api.model
+    def _prepare_leaves(self, contract, leave):
+        holiday = leave.holiday_id
+        return {
+            'name': holiday.holiday_status_id.name or _('Global Leaves'),
+            'sequence': 5,
+            'code': holiday.holiday_status_id.name or 'GLOBAL',
+            'number_of_days': 0.0,
+            'number_of_hours': 0.0,
+            'contract_id': contract.id,
+        }
+
+    @api.model
+    def _prepare_attendance(self, contract, work_data):
+        return {
+            'name': _("Normal Working Days paid at 100%"),
+            'sequence': 1,
+            'code': 'WORK100',
+            'number_of_days': work_data['days'],
+            'number_of_hours': work_data['hours'],
+            'contract_id': contract.id,
+        }
+
+    @api.model
     def get_worked_day_lines(self, contracts, date_from, date_to):
         """
         @param contract: Browse record of contracts
@@ -178,14 +201,7 @@ class HrPayslip(models.Model):
             day_leave_intervals = contract.employee_id.list_leaves(day_from, day_to, calendar=contract.resource_calendar_id)
             for day, hours, leave in day_leave_intervals:
                 holiday = leave.holiday_id
-                current_leave_struct = leaves.setdefault(holiday.holiday_status_id, {
-                    'name': holiday.holiday_status_id.name or _('Global Leaves'),
-                    'sequence': 5,
-                    'code': holiday.holiday_status_id.name or 'GLOBAL',
-                    'number_of_days': 0.0,
-                    'number_of_hours': 0.0,
-                    'contract_id': contract.id,
-                })
+                current_leave_struct = leaves.setdefault(holiday.holiday_status_id, self._prepare_leaves(contract, leave))
                 current_leave_struct['number_of_hours'] += hours
                 work_hours = calendar.get_work_hours_count(
                     tz.localize(datetime.combine(day, time.min)),
@@ -197,14 +213,7 @@ class HrPayslip(models.Model):
 
             # compute worked days
             work_data = contract.employee_id.get_work_days_data(day_from, day_to, calendar=contract.resource_calendar_id)
-            attendances = {
-                'name': _("Normal Working Days paid at 100%"),
-                'sequence': 1,
-                'code': 'WORK100',
-                'number_of_days': work_data['days'],
-                'number_of_hours': work_data['hours'],
-                'contract_id': contract.id,
-            }
+            attendances = self._prepare_attendance(contract, work_data)
 
             res.append(attendances)
             res.extend(leaves.values())
