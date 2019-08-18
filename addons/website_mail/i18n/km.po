@@ -44,7 +44,7 @@ msgstr "សារ"
 #: model:ir.model.fields,help:website_mail.field_mail_mail__description
 #: model:ir.model.fields,help:website_mail.field_mail_message__description
 msgid "Message description: either the subject, or the beginning of the body"
-msgstr ""
+msgstr "ការពិពណ៌នាសារ: ទាំងប្រធានបទឬការចាប់ផ្តើមនៃរាងកាយ"
 
 #. module: website_mail
 #. openerp-web
@@ -65,7 +65,7 @@ msgstr ""
 #. module: website_mail
 #: model_terms:ir.ui.view,arch_db:website_mail.follow
 msgid "Subscribe"
-msgstr ""
+msgstr "ការបរិយាយ"
 
 #. module: website_mail
 #: code:addons/website_mail/models/mail_message.py:57
