@@ -192,7 +192,7 @@ def normalize_domain(domain):
     """
     assert isinstance(domain, (list, tuple)), "Domains to normalize must have a 'domain' form: a list or tuple of domain components"
     if not domain:
-        return TRUE_DOMAIN
+        return TRUE_DOMAIN[:]
     result = []
     expected = 1                            # expected number of expressions
     op_arity = {NOT_OPERATOR: 1, AND_OPERATOR: 2, OR_OPERATOR: 2}
@@ -269,12 +269,12 @@ def combine(operator, unit, zero, domains):
 
 def AND(domains):
     """AND([D1,D2,...]) returns a domain representing D1 and D2 and ... """
-    return combine(AND_OPERATOR, TRUE_DOMAIN, FALSE_DOMAIN, domains)
+    return combine(AND_OPERATOR, TRUE_DOMAIN[:], FALSE_DOMAIN[:], domains)
 
 
 def OR(domains):
     """OR([D1,D2,...]) returns a domain representing D1 or D2 or ... """
-    return combine(OR_OPERATOR, FALSE_DOMAIN, TRUE_DOMAIN, domains)
+    return combine(OR_OPERATOR, FALSE_DOMAIN[:], TRUE_DOMAIN[:], domains)
 
 
 def distribute_not(domain):
