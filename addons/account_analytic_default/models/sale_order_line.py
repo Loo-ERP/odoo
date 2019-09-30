@@ -17,6 +17,6 @@ class SaleOrderLine(models.Model):
             if default_analytic_account:
                 vals.update({
                     'account_analytic_id': default_analytic_account.analytic_id.id,
-                    'analytic_tag_ids' : [(6, 0, default_analytic_account.analytic_tag_ids.ids)],
+                    'analytic_tag_ids' : [(6, 0, default_analytic_account.analytic_tag_ids.ids + self.analytic_tag_ids.ids)],
                 })
         return vals

@@ -790,7 +790,7 @@ class PosOrder(models.Model):
             account_precision = order.pricelist_id.currency_id.decimal_places
             if order.lines and not order.amount_total:
                 continue
-            if (not order.lines) or (not order.statement_ids) or (not float_is_zero(abs(order.amount_total - order.amount_paid), account_precision)):
+            if (not order.lines) or (not order.statement_ids) or (not float_is_zero((order.amount_total - order.amount_paid), precision_rounding=order.pricelist_id.currency_id.rounding)):
                 return False
         return True
 

@@ -32,24 +32,24 @@ msgstr "ប្រភេទផលិតផល"
 #: model:ir.model.fields,field_description:product.field_product_product__product_variant_count
 #: model:ir.model.fields,field_description:product.field_product_template__product_variant_count
 msgid "# Product Variants"
-msgstr ""
+msgstr "# វ៉ារ្យ៉ង់ផលិតផល"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_category__product_count
 msgid "# Products"
-msgstr ""
+msgstr "#ផលិតផល"
 
 #. module: product
 #: code:addons/product/models/product_pricelist.py:462
 #, python-format
 msgid "%s %% discount"
-msgstr ""
+msgstr "%s%%បញ្ចុះតំលៃ"
 
 #. module: product
 #: code:addons/product/models/product_pricelist.py:464
 #, python-format
 msgid "%s %% discount and %s surcharge"
-msgstr ""
+msgstr "%s%%បញ្ចុះតំលៃនិង%sបង់ថ្លៃបន្ថែម"
 
 #. module: product
 #: code:addons/product/models/product_template.py:357
@@ -60,7 +60,7 @@ msgstr "%s (ចម្លង)"
 #. module: product
 #: model:product.attribute.value,name:product.product_attribute_value_5
 msgid "1 year"
-msgstr ""
+msgstr "1 ឆ្នាំ"
 
 #. module: product
 #: model:product.product,description_sale:product.product_product_4
@@ -74,12 +74,12 @@ msgstr "160x80សម, ជាមួយនិងជើងធំ។"
 #. module: product
 #: model:product.attribute.value,name:product.product_attribute_value_6
 msgid "2 year"
-msgstr ""
+msgstr "2 ឆ្នាំ"
 
 #. module: product
 #: model_terms:ir.ui.view,arch_db:product.product_pricelist_view_kanban
 msgid "<i class=\"fa fa-money\" role=\"img\" aria-label=\"Currency\" title=\"Currency\"/>"
-msgstr ""
+msgstr "<i class=\"fa fa-money\" role=\"img\" aria-label=\"Currency\" title=\"Currency\"/>"
 
 #. module: product
 #: model_terms:ir.ui.view,arch_db:product.product_pricelist_item_form_view
@@ -88,48 +88,51 @@ msgid ""
 "                            <span attrs=\"{'invisible':[('base', '!=', 'standard_price')]}\">Cost  -  </span>\n"
 "                            <span attrs=\"{'invisible':[('base', '!=', 'pricelist')]}\">Other Pricelist  -  </span>"
 msgstr ""
+"<span attrs=\"{'invisible':[('base', '!=', 'list_price')]}\">តម្លៃសាធារណៈ - </span>\n"
+"<span attrs=\"{'invisible':[('base', '!=', 'standard_price')]}\">តម្លៃ-</span>\n"
+"<span attrs=\"{'invisible':[('base', '!=', 'pricelist')]}\">បញ្ជីតម្លៃ ផ្សេងទៀត -</span>"
 
 #. module: product
 #: model_terms:ir.ui.view,arch_db:product.product_category_form_view
 msgid "<span class=\"o_stat_text\"> Products</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">ផលិតផល</span>"
 
 #. module: product
 #: model_terms:ir.ui.view,arch_db:product.report_simple_barcode
 #: model_terms:ir.ui.view,arch_db:product.report_simple_label
 msgid "<span class=\"text-muted\">No barcode available</span>"
-msgstr ""
+msgstr "<span class=\"text-muted\">មិនមានលេខកូដផលិតផលទេ</span> "
 
 #. module: product
 #: model_terms:ir.ui.view,arch_db:product.product_template_form_view
 #: model_terms:ir.ui.view,arch_db:product.product_variant_easy_edit_view
 msgid "<span>m³</span>"
-msgstr ""
+msgstr "<span>ម³</span>"
 
 #. module: product
 #: model_terms:ir.ui.view,arch_db:product.report_pricelist
 msgid "<strong>Currency</strong>:<br/>"
-msgstr ""
+msgstr "<strong>រូបិយប័ណ្ណ</strong> :<br/>"
 
 #. module: product
 #: model_terms:ir.ui.view,arch_db:product.report_pricelist
 msgid "<strong>Description</strong>"
-msgstr ""
+msgstr "<strong>ការពិពណ៌នា</strong>"
 
 #. module: product
 #: model_terms:ir.ui.view,arch_db:product.report_pricelist
 msgid "<strong>Price List Name</strong>:<br/>"
-msgstr ""
+msgstr "<strong>ឈ្មោះបញ្ជីតម្លៃ</strong>៖ <br/>"
 
 #. module: product
 #: model_terms:ir.ui.view,arch_db:product.report_simple_label
 msgid "<strong>Price:</strong>"
-msgstr ""
+msgstr "<strong>តម្លៃ៖</strong>"
 
 #. module: product
 #: model_terms:ir.ui.view,arch_db:product.report_pricelist
 msgid "<strong>Print date</strong>:<br/>"
-msgstr ""
+msgstr "<strong>កាលបរិច្ឆេទបោះពុម្ព</strong>:<br/>"
 
 #. module: product
 #: model_terms:ir.ui.view,arch_db:product.report_packagingbarcode
@@ -143,11 +146,14 @@ msgid ""
 "                        will delete and recreate existing variants and lead\n"
 "                        to the loss of their possible customizations."
 msgstr ""
+"<strong>ការព្រមាន</strong> : បន្ថែមឬលុបគុណលក្ខណៈ\n"
+" នឹងលុបនិងបង្កើតវ៉ារ្យង់ដែលមានស្រាប់និងដឹកនាំ\n"
+" ការបាត់បង់នូវការប្តូរតាមបំណងរបស់ពួកគេ។"
 
 #. module: product
 #: sql_constraint:product.product:0
 msgid "A barcode can only be assigned to one product !"
-msgstr ""
+msgstr "លេខកូដអាចត្រូវបានកំណត់ទៅផលិតផលតែមួយប៉ុណ្ណោះ!"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_product__description_sale
@@ -157,6 +163,8 @@ msgid ""
 " This description will be copied to every Sales Order, Delivery Order and "
 "Customer Invoice/Credit Note"
 msgstr ""
+"ការពិពណ៌នាអំពីផលិតផលដែលអ្នកចង់ទំនាក់ទំនងជាមួយអតិថិជនរបស់អ្នក។ "
+"ការពិពណ៌នានេះនឹងត្រូវបានថតចម្លងរាល់ការលក់ការបញ្ជាទិញនិងវិក្កយបត្ររបស់អតិថិជន។"
 
 #. module: product
 #: model_terms:ir.actions.act_window,help:product.product_pricelist_action2
@@ -164,6 +172,8 @@ msgid ""
 "A price is a set of sales prices or rules to compute the price of sales order lines based on products, product categories, dates and ordered quantities.\n"
 "                This is the perfect tool to handle several pricings, seasonal discounts, etc."
 msgstr ""
+"តម្លៃគឺជាសំណុំនៃតម្លៃលក់ឬវិធានដើម្បីគណនាតម្លៃនៃជួរបញ្ជាទិញដែលមានមូលដ្ឋានលើផលិតផលប្រភេទផលិតផលកាលបរិច្ឆេទនិងបរិមាណដែលបានបញ្ជាទិញ។\n"
+" នេះគឺជាឧបករណ៍ដ៏ល្អឥតខ្ចោះដើម្បីដោះស្រាយនូវបញ្ហាជាច្រើនការបញ្ចុះតម្លៃតាមរដូវ។ ល។"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_product__type
@@ -218,7 +228,7 @@ msgstr "ទាំងអស់"
 #: code:addons/product/models/product_pricelist.py:457
 #, python-format
 msgid "All Products"
-msgstr ""
+msgstr "ផលិតផលទាំងអស់"
 
 #. module: product
 #: model_terms:ir.ui.view,arch_db:product.product_variant_easy_edit_view
@@ -420,7 +430,7 @@ msgstr ""
 #. module: product
 #: model_terms:ir.ui.view,arch_db:product.product_variant_easy_edit_view
 msgid "Codes"
-msgstr ""
+msgstr "កូដ"
 
 #. module: product
 #: model:product.attribute,name:product.product_attribute_2
@@ -1049,7 +1059,7 @@ msgstr ""
 #. module: product
 #: model_terms:ir.ui.view,arch_db:product.product_template_form_view
 msgid "Inventory"
-msgstr ""
+msgstr "សារពើភ័ណ្ឌ"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_product__message_is_follower
@@ -1171,7 +1181,7 @@ msgstr "ឋានៈនុក្រម"
 #. module: product
 #: model_terms:ir.ui.view,arch_db:product.product_template_form_view
 msgid "Logistics"
-msgstr ""
+msgstr "ភ័ស្តុភារ"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_product__message_main_attachment_id
@@ -1215,7 +1225,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:product.field_product_product__image_medium
 #: model:ir.model.fields,field_description:product.field_product_template__image_medium
 msgid "Medium-sized image"
-msgstr ""
+msgstr "រូបភាពមានទំហំមធ្យម"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_template__image_medium
@@ -1499,13 +1509,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:product.field_res_users__property_product_pricelist
 #: model_terms:ir.ui.view,arch_db:product.product_template_form_view
 msgid "Pricelist"
-msgstr ""
+msgstr "តារាង​តំលៃ "
 
 #. module: product
 #: model:ir.model,name:product.model_product_pricelist_item
 #: model:ir.model.fields,field_description:product.field_product_product__pricelist_item_ids
 msgid "Pricelist Item"
-msgstr ""
+msgstr "បញ្ចីឈ្មោះវត្ថុ"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_pricelist_item__applied_on
@@ -1533,7 +1543,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:product.product_pricelist_action2
 #: model:ir.model.fields,field_description:product.field_res_country_group__pricelist_ids
 msgid "Pricelists"
-msgstr ""
+msgstr "តារាងតំលៃ"
 
 #. module: product
 #: model:res.groups,name:product.group_product_pricelist
@@ -1582,7 +1592,7 @@ msgstr "ផលិតផល"
 #: model_terms:ir.ui.view,arch_db:product.product_attribute_view_form
 #: model_terms:ir.ui.view,arch_db:product.product_template_attribute_value_view_form
 msgid "Product Attribute"
-msgstr ""
+msgstr "គុណលក្ខណៈផលិតផល"
 
 #. module: product
 #: model:ir.model,name:product.model_product_template_attribute_value
@@ -1713,7 +1723,7 @@ msgstr "ប្រភេទផលិតផល"
 #: model_terms:ir.ui.view,arch_db:product.product_pricelist_item_form_view
 #: selection:product.pricelist.item,applied_on:0
 msgid "Product Variant"
-msgstr ""
+msgstr "ការផ្លាស់ប្តូរផលិតផល"
 
 #. module: product
 #: model:ir.actions.act_window,name:product.product_attribute_value_action
@@ -1726,7 +1736,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:product.product_variant_action
 #: model_terms:ir.ui.view,arch_db:product.product_product_tree_view
 msgid "Product Variants"
-msgstr ""
+msgstr "វ៉ារ្យ៉ង់ផលិតផល"
 
 #. module: product
 #: model:ir.actions.act_window,name:product.product_template_action
@@ -1939,7 +1949,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:product.field_product_product__image_small
 #: model:ir.model.fields,field_description:product.field_product_template__image_small
 msgid "Small-sized image"
-msgstr ""
+msgstr "រូបភាពមានទំហំតូច។"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_template__image_small
@@ -2769,7 +2779,7 @@ msgstr "គីឡូ"
 #: code:addons/product/models/product_template.py:566
 #, python-format
 msgid "product"
-msgstr ""
+msgstr "ផលិតផល"
 
 #. module: product
 #: model:product.product,description_sale:product.consu_delivery_02

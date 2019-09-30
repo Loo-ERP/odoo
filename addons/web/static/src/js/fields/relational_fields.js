@@ -2312,7 +2312,7 @@ var FieldStatus = AbstractField.extend({
 var FieldSelection = AbstractField.extend({
     template: 'FieldSelection',
     specialData: "_fetchSpecialRelation",
-    supportedFieldTypes: ['selection', 'many2one'],
+    supportedFieldTypes: ['selection'],
     events: _.extend({}, AbstractField.prototype.events, {
         'change': '_onChange',
     }),
