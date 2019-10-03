@@ -357,9 +357,6 @@ td {
     height:100%;
     display: -webkit-flex;
     display: flex;
-    overflow : hidden;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
 }
 .pos .pos-rightheader > * {
     border-right: 1px solid #292929;
