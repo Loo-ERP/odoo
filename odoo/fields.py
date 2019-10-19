@@ -239,6 +239,11 @@ class Field(MetaField('DummyField', (object,), {})):
         on the company. In other words, users that belong to different companies
         may see different values for the field on a given record.
 
+        .. warning::
+
+            Company-dependent fields aren't stored in the table of the model they're defined on,
+            instead, they are stored in the ``ir.property`` model's table.
+
         :param company_dependent: whether the field is company-dependent (boolean)
 
         .. _field-incremental-definition:
@@ -2113,6 +2118,9 @@ class Many2one(_Relational):
 
     def update_db_foreign_key(self, model, column):
         comodel = model.env[self.comodel_name]
+        # foreign keys do not work on views, and users can define custom models on sql views.
+        if not model._is_an_ordinary_table() or not comodel._is_an_ordinary_table():
+            return
         # ir_actions is inherited, so foreign key doesn't work on it
         if not comodel._auto or comodel._table == 'ir_actions':
             return

@@ -306,8 +306,8 @@ class PaymentTransactionStripeSCA(models.Model):
             self._set_transaction_pending()
             return True
         else:
-            error = tree.get("failure_message")
-            _logger.warn(error)
+            error = tree.get("failure_message") or tree['error']['message']
+            _logger.warning(error)
             vals.update({"state_message": error})
             self.write(vals)
             self._set_transaction_cancel()

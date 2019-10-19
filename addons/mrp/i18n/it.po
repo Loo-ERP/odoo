@@ -23,8 +23,8 @@
 # Mario Riva <mario.riva@gmail.com>, 2019
 # Paolo Valier, 2019
 # Léonie Bouchat <lbo@odoo.com>, 2019
-# Sergio Zanchetta <primes2h@gmail.com>, 2019
 # Lorenzo Battistini <lorenzo.battistini@agilebg.com>, 2019
+# Sergio Zanchetta <primes2h@gmail.com>, 2019
 # 
 msgid ""
 msgstr ""
@@ -32,7 +32,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-03-29 10:09+0000\n"
 "PO-Revision-Date: 2018-08-24 09:21+0000\n"
-"Last-Translator: Lorenzo Battistini <lorenzo.battistini@agilebg.com>, 2019\n"
+"Last-Translator: Sergio Zanchetta <primes2h@gmail.com>, 2019\n"
 "Language-Team: Italian (https://www.transifex.com/odoo/teams/41243/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -163,9 +163,9 @@ msgid ""
 "specific.\" role=\"img\" aria-label=\"Values set here are company-"
 "specific.\" groups=\"base.group_multi_company\"/>"
 msgstr ""
-"<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
-"specific.\" role=\"img\" aria-label=\"Values set here are company-"
-"specific.\" groups=\"base.group_multi_company\"/>"
+"<span class=\"fa fa-lg fa-building-o\" title=\"I valori impostati qui sono "
+"specifici per azienda.\" role=\"img\" aria-label=\"Values set here are "
+"company-specific.\" groups=\"base.group_multi_company\"/>"
 
 #. module: mrp
 #: model_terms:ir.ui.view,arch_db:mrp.mrp_workcenter_view
@@ -466,7 +466,7 @@ msgstr "Contatti Archiviati"
 #: model:ir.model.fields,field_description:mrp.field_mrp_unbuild__message_attachment_count
 #: model:ir.model.fields,field_description:mrp.field_mrp_workorder__message_attachment_count
 msgid "Attachment Count"
-msgstr "Numero di allegati"
+msgstr "Numero allegati"
 
 #. module: mrp
 #: model:ir.model.fields,field_description:mrp.field_mrp_document__local_url
@@ -1352,7 +1352,7 @@ msgstr "Informazioni generali"
 #. module: mrp
 #: model:ir.model.fields,help:mrp.field_mrp_document__priority
 msgid "Gives the sequence order when displaying a list of MRP documents."
-msgstr "Stabilisce l'ordine in cui visualizzare una lista di documenti MRP."
+msgstr "Stabilisce l'ordine con cui visualizzare un elenco di documenti MRP."
 
 #. module: mrp
 #: model:ir.model.fields,help:mrp.field_mrp_bom__sequence
@@ -1412,7 +1412,7 @@ msgstr "Ha movimenti"
 #. module: mrp
 #: selection:mrp.document,priority:0
 msgid "High"
-msgstr "Alto"
+msgstr "Alta"
 
 #. module: mrp
 #: model:ir.model.fields,field_description:mrp.field_change_production_qty__id
@@ -1812,7 +1812,7 @@ msgstr "Lotti / Numeri di serie"
 #. module: mrp
 #: selection:mrp.document,priority:0
 msgid "Low"
-msgstr "Basso"
+msgstr "Bassa"
 
 #. module: mrp
 #: model:ir.model.fields,field_description:mrp.field_res_config_settings__group_mrp_routings
@@ -2197,7 +2197,7 @@ msgstr "Non è per limitare o impostare preferiti, ma informativo."
 #. module: mrp
 #: selection:mrp.production,priority:0
 msgid "Not urgent"
-msgstr "Non Urgente"
+msgstr "Non urgente"
 
 #. module: mrp
 #: model_terms:ir.ui.view,arch_db:mrp.mrp_routing_form_view
@@ -2249,7 +2249,7 @@ msgstr "Numero di messaggi che richiedono un'azione"
 #: model:ir.model.fields,help:mrp.field_mrp_unbuild__message_has_error_counter
 #: model:ir.model.fields,help:mrp.field_mrp_workorder__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr "Numero di messaggio con errori di invio"
+msgstr "Numero di messaggi con errore di consegna"
 
 #. module: mrp
 #: model:ir.model.fields,help:mrp.field_mrp_workcenter__capacity
@@ -2948,7 +2948,7 @@ msgstr "Riferimento"
 #. module: mrp
 #: sql_constraint:mrp.production:0
 msgid "Reference must be unique per Company!"
-msgstr "Il riferimento deve essere unico per ogni azienda!"
+msgstr "Il riferimento deve essere univoco per azienda."
 
 #. module: mrp
 #: model:ir.model.fields,help:mrp.field_mrp_production__origin
@@ -3029,7 +3029,7 @@ msgstr "Responsabile"
 #: model:ir.model.fields,field_description:mrp.field_mrp_production__activity_user_id
 #: model:ir.model.fields,field_description:mrp.field_mrp_unbuild__activity_user_id
 msgid "Responsible User"
-msgstr "Utente Responsabile"
+msgstr "Utente responsabile"
 
 #. module: mrp
 #: model:ir.model.fields,field_description:mrp.field_mrp_bom__routing_id

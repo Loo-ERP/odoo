@@ -299,7 +299,7 @@ msgstr "Assegna la priorità all'elenco fornitori del prodotto."
 #: model:ir.model.fields,field_description:product.field_product_product__message_attachment_count
 #: model:ir.model.fields,field_description:product.field_product_template__message_attachment_count
 msgid "Attachment Count"
-msgstr "Totale allegati"
+msgstr "Numero allegati"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_attribute__name
@@ -1380,7 +1380,7 @@ msgstr "Numero di messaggi che richiedono un'azione"
 #: model:ir.model.fields,help:product.field_product_product__message_has_error_counter
 #: model:ir.model.fields,help:product.field_product_template__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr "Numero di messaggi con errori di consegna"
+msgstr "Numero di messaggi con errore di consegna"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_product__message_unread_counter

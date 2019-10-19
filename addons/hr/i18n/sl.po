@@ -8,8 +8,8 @@
 # laznikd <laznik@mentis.si>, 2019
 # Martin Trigaux, 2019
 # Boris Kodelja <boris@hbs.si>, 2019
-# Matjaz Mozetic <m.mozetic@matmoz.si>, 2019
 # Jasmina Macur <jasmina@hbs.si>, 2019
+# Matjaz Mozetic <m.mozetic@matmoz.si>, 2019
 # Tadej Lupšina <tadej@hbs.si>, 2019
 # 
 msgid ""
@@ -520,7 +520,7 @@ msgstr "Kategorija zaposlenega"
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_employee__google_drive_link
 msgid "Employee Documents"
-msgstr "Dokumenti zaposlenih"
+msgstr "Dokumenti zaposlenega"
 
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_employee_category__name
@@ -1959,7 +1959,7 @@ msgstr "oddelek"
 #. module: hr
 #: model_terms:ir.ui.view,arch_db:hr.view_employee_form
 msgid "e.g. Part Time"
-msgstr "n.pr. delni čas"
+msgstr "npr. delni čas"
 
 #. module: hr
 #: model_terms:ir.ui.view,arch_db:hr.view_hr_job_form

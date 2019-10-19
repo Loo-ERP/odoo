@@ -1084,7 +1084,7 @@ msgid ""
 "this partner"
 msgstr ""
 "Če je nastavljeno, se bo ta prodajna skupina uporabljala za prodajo in "
-"dodelitve za tega partnerja"
+"dodelitve povezane s tem partnerjem"
 
 #. module: crm
 #: model:ir.model.fields,help:crm.field_crm_lead__is_blacklisted
@@ -2029,7 +2029,7 @@ msgstr "Prodajna ekipa"
 #: code:addons/crm/models/crm_lead.py:1125
 #, python-format
 msgid "Sales Team Settings"
-msgstr ""
+msgstr "Nastavitve prodajne ekipe"
 
 #. module: crm
 #: model:ir.ui.menu,name:crm.crm_team_config
@@ -2073,7 +2073,7 @@ msgstr "Izbira indicev/priložnosti"
 #. module: crm
 #: model:ir.actions.act_window,name:crm.action_lead_mass_mail
 msgid "Send an email"
-msgstr ""
+msgstr "Pošlji E-pošto"
 
 #. module: crm
 #: model:ir.model.fields,field_description:crm.field_crm_stage__sequence
@@ -2681,7 +2681,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:crm.crm_case_form_view_leads
 #: model_terms:ir.ui.view,arch_db:crm.crm_case_form_view_oppor
 msgid "e.g. https://www.odoo.com"
-msgstr ""
+msgstr "npr. https://www.odoo.com"
 
 #. module: crm
 #: code:addons/crm/models/crm_lead.py:946
