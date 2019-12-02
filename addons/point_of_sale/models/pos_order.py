@@ -756,7 +756,7 @@ class PosOrder(models.Model):
         count = 0
         for tmp_order in orders_to_save:
             count += 1
-            to_invoice = tmp_order['to_invoice']
+            to_invoice = tmp_order['to_invoice'] or tmp_order['data'].get('to_invoice')
             order = tmp_order['data']
             if to_invoice:
                 self._match_payment_to_invoice(order)
@@ -772,7 +772,7 @@ class PosOrder(models.Model):
                 # do not hide transactional errors, the order(s) won't be saved!
                 raise
             except Exception as e:
-                _logger.error('Could not fully process the POS Order: %s', tools.ustr(e))
+                _logger.error('Could not fully process the POS Order: %s', tools.ustr(e), exc_info=True)
                 raise
             _logger.info("Procesando %s de %s, TPV: %s", count, total, pos_order.session_id.config_id.display_name)
             if to_invoice:
@@ -843,6 +843,11 @@ class PosOrder(models.Model):
     def create_picking(self):
         """Create a picking for each order and validate it."""
         Picking = self.env['stock.picking']
+        # If no email is set on the user, the picking creation and validation will fail be cause of
+        # the 'Unable to log message, please configure the sender's email address.' error.
+        # We disable the tracking in this case.
+        if not self.env.user.partner_id.email:
+            Picking = Picking.with_context(tracking_disable=True)
         Move = self.env['stock.move']
         for order in self:
             lines_to_picking = order._get_lines_to_picking()
@@ -862,7 +867,10 @@ class PosOrder(models.Model):
                 pos_qty = any([x.qty > 0 for x in order.lines if x.product_id.type in ['product', 'consu']])
                 if pos_qty:
                     order_picking = Picking.create(picking_vals.copy())
-                    order_picking.message_post(body=message)
+                    if self.env.user.partner_id.email:
+                        order_picking.message_post(body=message)
+                    else:
+                        order_picking.sudo().message_post(body=message)
                 neg_qty = any([x.qty < 0 for x in order.lines if x.product_id.type in ['product', 'consu']])
                 if neg_qty:
                     return_vals = picking_vals.copy()
@@ -872,7 +880,10 @@ class PosOrder(models.Model):
                         'picking_type_id': return_pick_type.id
                     })
                     return_picking = Picking.create(return_vals)
-                    return_picking.message_post(body=message)
+                    if self.env.user.partner_id.email:
+                        return_picking.message_post(body=message)
+                    else:
+                        return_picking.message_post(body=message)
 
             for line in lines_to_picking:
                 moves |= Move.create(order._prepare_stock_move_vals(line, order_picking, return_picking, picking_type, return_pick_type, location_id, destination_id))

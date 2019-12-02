@@ -352,7 +352,7 @@ msgstr "Attributi"
 #: model_terms:ir.ui.view,arch_db:product.report_simple_barcode
 #: model_terms:ir.ui.view,arch_db:product.report_simple_label
 msgid "Barcode"
-msgstr "Barcode"
+msgstr "Codice a barre"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_packaging__barcode
@@ -1357,7 +1357,7 @@ msgstr "Riepilogo prossima attività"
 #: model:ir.model.fields,field_description:product.field_product_product__activity_type_id
 #: model:ir.model.fields,field_description:product.field_product_template__activity_type_id
 msgid "Next Activity Type"
-msgstr "Tipo prossima attività"
+msgstr "Tipologia prossima attività"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_product__message_needaction_counter

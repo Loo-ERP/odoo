@@ -8,19 +8,19 @@
 # Martin Trigaux, 2019
 # Dejan Sraka <dejan.sraka@picolabs.si>, 2019
 # matjaz k <matjaz@mentis.si>, 2019
-# Matjaz Mozetic <m.mozetic@matmoz.si>, 2019
-# Tadej Lupšina <tadej@hbs.si>, 2019
 # Grega Vavtar <grega@hbs.si>, 2019
 # Boris Kodelja <boris@hbs.si>, 2019
+# Matjaz Mozetic <m.mozetic@matmoz.si>, 2019
 # Jasmina Macur <jasmina@hbs.si>, 2019
+# Tadej Lupšina <tadej@hbs.si>, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-29 10:08+0000\n"
+"POT-Creation-Date: 2019-11-14 07:33+0000\n"
 "PO-Revision-Date: 2018-08-24 09:33+0000\n"
-"Last-Translator: Jasmina Macur <jasmina@hbs.si>, 2019\n"
+"Last-Translator: Tadej Lupšina <tadej@hbs.si>, 2019\n"
 "Language-Team: Slovenian (https://www.transifex.com/odoo/teams/41243/sl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -242,6 +242,8 @@ msgid ""
 "<b>Click on a text</b> to start editing it. <i>It's that easy to edit your "
 "content!</i>"
 msgstr ""
+"<b>Kliknite na besedilo</b> , da ga začnete urejati. <i>Tako enostavno je "
+"urediti vsebino!</i>"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_tabs
@@ -644,6 +646,8 @@ msgid ""
 "<span class=\"carousel-control-next-icon\"/>\n"
 "            <span class=\"sr-only\">Next</span>"
 msgstr ""
+"<span class=\"carousel-control-next-icon\"/>\n"
+"            <span class=\"sr-only\">Naslednji</span>"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_carousel
@@ -695,6 +699,9 @@ msgid ""
 "                <i class=\"fa fa-plus-circle\"/> Add Facebook Page\n"
 "            </span>"
 msgstr ""
+"<span class=\"o_add_facebook_page\">\n"
+"                <i class=\"fa fa-plus-circle\"/> Dodaj Facebook stran\n"
+"            </span>"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_image_gallery
@@ -723,6 +730,9 @@ msgid ""
 "                                <span class=\"s_comparisons_price\"><b>35</b></span>\n"
 "                                <span class=\"s_comparisons_decimal\">.00</span>"
 msgstr ""
+"<span class=\"s_comparisons_currency\">$</span>\n"
+"                                <span class=\"s_comparisons_price\"><b>35</b></span>\n"
+"                                <span class=\"s_comparisons_decimal\">.00</span>"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_comparisons
@@ -912,7 +922,7 @@ msgstr ""
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.res_config_settings_view_form
 msgid "Add links to social media on your website"
-msgstr ""
+msgstr "Dodajte povezave do socialnih medijev na vaši spletni strani"
 
 #. module: website
 #. openerp-web
@@ -1128,13 +1138,19 @@ msgstr "CDN filtri"
 
 #. module: website
 #. openerp-web
-#: code:addons/website/static/src/js/backend/dashboard.js:103
-#: code:addons/website/static/src/js/menu/new_content.js:271
+#: code:addons/website/static/src/js/backend/dashboard.js:106
+#: code:addons/website/static/src/js/menu/new_content.js:286
 #: code:addons/website/static/src/xml/website.xml:27
 #: model_terms:ir.ui.view,arch_db:website.500
 #, python-format
 msgid "Cancel"
 msgstr "Prekliči"
+
+#. module: website
+#: code:addons/website/models/res_lang.py:15
+#, python-format
+msgid "Cannot deactivate a language that is currently used on a website."
+msgstr ""
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.bs_debug_page_ir_ui_view
@@ -1411,7 +1427,7 @@ msgstr "Ustavite"
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.res_config_settings_view_form
 msgid "Create a New Website"
-msgstr ""
+msgstr "Ustvari novo spletno stran"
 
 #. module: website
 #: model:ir.model.fields,field_description:website.field_website__create_uid
@@ -1959,7 +1975,7 @@ msgstr "Stalno"
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
 msgid "Float"
-msgstr "Plavajoče"
+msgstr "Decimalno število"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
@@ -2025,7 +2041,7 @@ msgstr ""
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.res_config_settings_view_form
 msgid "GitHub"
-msgstr ""
+msgstr "GitHub"
 
 #. module: website
 #: model:ir.model.fields,field_description:website.field_res_config_settings__social_github
@@ -2199,7 +2215,7 @@ msgstr "HTTP usmerjanje"
 #: model_terms:ir.ui.view,arch_db:website.bs_debug_page_ir_ui_view
 #: model_terms:website.page,arch_db:website.bs_debug_page
 msgid "Header"
-msgstr ""
+msgstr "Glava"
 
 #. module: website
 #: model:ir.model.fields,field_description:website.field_website_page__header_color
@@ -2548,6 +2564,7 @@ msgid "Keywords"
 msgstr ""
 
 #. module: website
+#: model:ir.model,name:website.model_res_lang
 #: model:ir.model.fields,field_description:website.field_res_config_settings__language_ids
 #: model:ir.model.fields,field_description:website.field_website__language_ids
 msgid "Languages"
@@ -3777,12 +3794,12 @@ msgstr "Specifičen uporabniški račun"
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
 msgid "Square"
-msgstr ""
+msgstr "Kvadrat"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_comparisons
 msgid "Start now"
-msgstr ""
+msgstr "Začni zdaj"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_image_text
@@ -4256,19 +4273,21 @@ msgstr "Url"
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.res_config_settings_view_form
 msgid "Use Google Map on your website ("
-msgstr ""
+msgstr "Uporabi Google Map na svoji spletni strani ("
 
 #. module: website
 #. openerp-web
 #: code:addons/website/static/src/xml/website.facebook_page.xml:35
 #, python-format
 msgid "Use Small Header"
-msgstr ""
+msgstr "Uporabite majhno glavo"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.res_config_settings_view_form
 msgid "Use a CDN to optimize the availability of your website's content"
 msgstr ""
+"Uporabite CDN za optimizacijo razpoložljivosti vsebine na vaši spletni "
+"strani"
 
 #. module: website
 #. openerp-web
@@ -4661,6 +4680,7 @@ msgstr ""
 msgid ""
 "Write what the customer would like to know, <br/>not what you want to show."
 msgstr ""
+"Napišite, kaj bi stranka želela vedeti, <br/>ne tisto, kar želite pokazati."
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_features_grid
@@ -4719,7 +4739,7 @@ msgstr ""
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.res_config_settings_view_form
 msgid "YouTube"
-msgstr ""
+msgstr "YouTube"
 
 #. module: website
 #. openerp-web
@@ -4826,7 +4846,7 @@ msgstr "ali urejajte glavno"
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.res_config_settings_view_form
 msgid "page, snippets, ...)"
-msgstr ""
+msgstr "stran, odrezki, ...)"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippet_options

@@ -9,16 +9,16 @@
 # matjaz k <matjaz@mentis.si>, 2019
 # Simon Gorše <simon@gorse.org>, 2019
 # Martin Trigaux, 2019
-# Tadej Lupšina <tadej@hbs.si>, 2019
 # Boris Kodelja <boris@hbs.si>, 2019
 # Matjaz Mozetic <m.mozetic@matmoz.si>, 2019
+# Tadej Lupšina <tadej@hbs.si>, 2019
 # Jasmina Macur <jasmina@hbs.si>, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-15 10:04+0000\n"
+"POT-Creation-Date: 2019-11-14 07:35+0000\n"
 "PO-Revision-Date: 2018-08-24 09:20+0000\n"
 "Last-Translator: Jasmina Macur <jasmina@hbs.si>, 2019\n"
 "Language-Team: Slovenian (https://www.transifex.com/odoo/teams/41243/sl/)\n"
@@ -633,7 +633,7 @@ msgstr "Ustvari nov mailing seznam"
 #. module: mass_mailing
 #: model_terms:ir.actions.act_window,help:mass_mailing.action_view_mass_mailing_stages
 msgid "Create a new mass mailing stage"
-msgstr ""
+msgstr "Ustvari novo fazo množičnega pošiljanja sporočil"
 
 #. module: mass_mailing
 #: model_terms:ir.actions.act_window,help:mass_mailing.action_view_mass_mailing_contacts_from_list
@@ -905,7 +905,7 @@ msgstr ""
 #. module: mass_mailing
 #: model_terms:ir.ui.view,arch_db:mass_mailing.mail_mass_mailing_list_contact_view_search
 msgid "Exclude Invalid Emails"
-msgstr ""
+msgstr "Izključi neveljavna e-poštna sporočila"
 
 #. module: mass_mailing
 #: model_terms:ir.ui.view,arch_db:mass_mailing.mail_mass_mailing_list_contact_view_search
@@ -1013,6 +1013,9 @@ msgid ""
 "related mail_mail can be deleted separately from its statistics. However the"
 " ID is needed for several action and controllers."
 msgstr ""
+"ID povezanega mail_mail. To polje je celo število ker povezani mail_mail ne "
+"more biti izbrisan ločeno od njegove statistike. Kljub vsemu pa je ID "
+"potreben za več dejanj in kontrolnikov."
 
 #. module: mass_mailing
 #: model:ir.model.fields,help:mass_mailing.field_mail_mass_mailing_contact__message_unread
@@ -1551,7 +1554,7 @@ msgid ""
 "                send emails to any contact saved in other Odoo apps."
 msgstr ""
 "Ni vam treba uvažati poštnih seznamov, lahko preprosto\n"
-"                 pošljite e-pošto vsem kontaktom, shranjenim v drugih aplikacijah Odoo."
+"                pošljite e-pošto vsem kontaktom, shranjenim v drugih aplikacijah Odoo."
 
 #. module: mass_mailing
 #: model_terms:ir.ui.view,arch_db:mass_mailing.s_mail_block_comparison_table
@@ -1910,6 +1913,14 @@ msgid "Scheduled date"
 msgstr "Predviden datum"
 
 #. module: mass_mailing
+#: code:addons/mass_mailing/models/mass_mailing.py:255
+#, python-format
+msgid ""
+"Search opt out cannot be executed without a unique and valid active mailing "
+"list context."
+msgstr ""
+
+#. module: mass_mailing
 #: model_terms:ir.ui.view,arch_db:mass_mailing.email_designer_snippets
 msgid "Select a template"
 msgstr "Izberite predlogo"
@@ -2084,7 +2095,7 @@ msgstr "Zadeva"
 #: model:ir.model.fields,field_description:mass_mailing.field_mail_mass_mailing_contact__subscription_list_ids
 #: model:ir.model.fields,field_description:mass_mailing.field_mail_mass_mailing_list__subscription_contact_ids
 msgid "Subscription Information"
-msgstr ""
+msgstr "Informacije o naročnini"
 
 #. module: mass_mailing
 #: sql_constraint:mail.mass_mailing.tag:0

@@ -40,7 +40,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website_sale_wishlist.add_to_wishlist
 #: model_terms:ir.ui.view,arch_db:website_sale_wishlist.product_add_to_wishlist
 msgid "<span class=\"fa fa-heart\" role=\"img\" aria-label=\"Add to wishlist\"/>"
-msgstr ""
+msgstr "<span class=\"fa fa-heart\" role=\"img\" aria-label=\"Add to wishlist\"/>"
 
 #. module: website_sale_wishlist
 #: model:ir.model.fields,field_description:website_sale_wishlist.field_product_wishlist__active
@@ -92,6 +92,11 @@ msgstr "Valuta"
 #: model:ir.model.fields,field_description:website_sale_wishlist.field_product_wishlist__display_name
 msgid "Display Name"
 msgstr "Prikazni naziv"
+
+#. module: website_sale_wishlist
+#: sql_constraint:product.wishlist:0
+msgid "Duplicated wishlisted product for this partner."
+msgstr ""
 
 #. module: website_sale_wishlist
 #: model:ir.model.fields,field_description:website_sale_wishlist.field_product_wishlist__id

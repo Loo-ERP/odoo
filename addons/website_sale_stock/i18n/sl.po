@@ -8,6 +8,7 @@
 # matjaz k <matjaz@mentis.si>, 2019
 # Boris Kodelja <boris@hbs.si>, 2019
 # Tadej Lupšina <tadej@hbs.si>, 2019
+# Grega Vavtar <grega@hbs.si>, 2019
 # Jasmina Macur <jasmina@hbs.si>, 2019
 # 
 msgid ""
@@ -131,7 +132,7 @@ msgstr "Postavka prodajnega naloga"
 #: selection:product.template,inventory_availability:0
 #: selection:res.config.settings,inventory_availability:0
 msgid "Sell regardless of inventory"
-msgstr "Prodaja ne glede na zalog"
+msgstr "Prodaja ne glede na zalogo"
 
 #. module: website_sale_stock
 #: selection:product.template,inventory_availability:0
@@ -165,7 +166,7 @@ msgstr ""
 #: code:addons/website_sale_stock/static/src/xml/website_sale_stock_product_availability.xml:22
 #, python-format
 msgid "Temporarily out of stock"
-msgstr ""
+msgstr "Trenutno ni zaloge"
 
 #. module: website_sale_stock
 #: model:ir.model,name:website_sale_stock.model_stock_picking
@@ -228,4 +229,4 @@ msgstr ""
 #: code:addons/website_sale_stock/static/src/xml/website_sale_stock_product_availability.xml:20
 #, python-format
 msgid "in your cart."
-msgstr ""
+msgstr "v vaši košarici."

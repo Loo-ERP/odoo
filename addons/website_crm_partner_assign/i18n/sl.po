@@ -9,9 +9,9 @@
 # matjaz k <matjaz@mentis.si>, 2019
 # jl2035 <jaka.luthar@gmail.com>, 2019
 # Matjaz Mozetic <m.mozetic@matmoz.si>, 2019
+# Boris Kodelja <boris@hbs.si>, 2019
 # Grega Vavtar <grega@hbs.si>, 2019
 # Tadej Lupšina <tadej@hbs.si>, 2019
-# Boris Kodelja <boris@hbs.si>, 2019
 # Jasmina Macur <jasmina@hbs.si>, 2019
 # 
 msgid ""
@@ -58,7 +58,7 @@ msgstr "<i class=\"fa fa-pencil mr-1\"/>Urejanje"
 #. module: website_crm_partner_assign
 #: model_terms:ir.ui.view,arch_db:website_crm_partner_assign.portal_my_opportunities
 msgid "<i class=\"fa fa-plus\"/> Create New"
-msgstr ""
+msgstr "<i class=\"fa fa-plus\"/> Ustvari novo"
 
 #. module: website_crm_partner_assign
 #: code:addons/website_crm_partner_assign/models/crm_lead.py:182
@@ -144,6 +144,9 @@ msgid ""
 "                                                                    <span class=\"fa fa-calendar\" role=\"img\" aria-label=\"Calendar\"/>\n"
 "                                                                </span>"
 msgstr ""
+"<span class=\"input-group-text\">\n"
+"                                                                    <span class=\"fa fa-calendar\" role=\"img\" aria-label=\"Calendar\"/>\n"
+"                                                                </span>"
 
 #. module: website_crm_partner_assign
 #: model_terms:ir.ui.view,arch_db:website_crm_partner_assign.portal_my_opportunity
@@ -585,7 +588,7 @@ msgstr "Filtriranje po državi"
 #. module: website_crm_partner_assign
 #: model_terms:ir.ui.view,arch_db:website_crm_partner_assign.index
 msgid "Filter by Level"
-msgstr ""
+msgstr "Filtriraj po stopnji"
 
 #. module: website_crm_partner_assign
 #: model:ir.model.fields,field_description:website_crm_partner_assign.field_crm_lead_forward_to_partner__partner_id

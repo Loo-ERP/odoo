@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-08 13:35+0000\n"
+"POT-Creation-Date: 2019-11-14 07:34+0000\n"
 "PO-Revision-Date: 2018-08-24 09:24+0000\n"
 "Last-Translator: Lux Sok <sok.lux@gmail.com>, 2019\n"
 "Language-Team: Khmer (https://www.transifex.com/odoo/teams/41243/km/)\n"
@@ -623,7 +623,6 @@ msgstr "អនុញ្ញាតឱ្យអ្នកផ្ញើវិក័យ
 
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.report_saleorder_document
-#: model_terms:ir.ui.view,arch_db:sale.sale_order_portal_content
 msgid "Amount"
 msgstr "ចំនួន"
 
@@ -631,6 +630,12 @@ msgstr "ចំនួន"
 #: model:ir.model.fields,field_description:sale.field_sale_order__amount_undiscounted
 msgid "Amount Before Discount"
 msgstr "ចំនួនទឹកប្រាក់មុនការបញ្ចុះតម្លៃ"
+
+#. module: sale
+#: code:addons/sale/models/payment.py:90
+#, python-format
+msgid "Amount Mismatch (%s)"
+msgstr ""
 
 #. module: sale
 #: model:ir.model.fields,field_description:sale.field_crm_team__quotations_amount
@@ -3661,6 +3666,14 @@ msgstr ""
 "រឹមត្រូវបានគណនាជាផលបូកនៃតម្លៃលក់ផលិតផលដកថ្លៃដើមដែលបានកំណត់ក្នុងទម្រង់លម្អិតរបស់ពួកគេ។"
 
 #. module: sale
+#: code:addons/sale/models/payment.py:97
+#, python-format
+msgid ""
+"The order was not confirmed despite response from the acquirer (%s): order "
+"total is %r but acquirer replied with %r."
+msgstr ""
+
+#. module: sale
 #: model:ir.model.fields,help:sale.field_sale_order__reference
 msgid "The payment communication of this sale order."
 msgstr "ការទំនាក់ទំនងការទូទាត់នៃលំដាប់នៃការលក់នេះ។"
@@ -3898,7 +3911,6 @@ msgstr "សរុប​"
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.report_all_channels_sales_view_pivot
 #: model_terms:ir.ui.view,arch_db:sale.report_saleorder_document
-#: model_terms:ir.ui.view,arch_db:sale.sale_order_portal_content
 msgid "Total Price"
 msgstr "តំលៃសរុប"
 
@@ -4090,7 +4102,7 @@ msgstr ""
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.view_order_form
 msgid "Void Transaction"
-msgstr ""
+msgstr "ប្រតិបតិ្តការអវត្តមាន"
 
 #. module: sale
 #: model:ir.model.fields,field_description:sale.field_sale_report__volume

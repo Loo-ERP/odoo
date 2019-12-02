@@ -9,9 +9,9 @@
 # Martin Trigaux, 2019
 # Vida Potočnik <vida.potocnik@mentis.si>, 2019
 # matjaz k <matjaz@mentis.si>, 2019
-# Grega Vavtar <grega@hbs.si>, 2019
 # Matjaz Mozetic <m.mozetic@matmoz.si>, 2019
 # Boris Kodelja <boris@hbs.si>, 2019
+# Grega Vavtar <grega@hbs.si>, 2019
 # Jasmina Macur <jasmina@hbs.si>, 2019
 # 
 msgid ""
@@ -247,6 +247,8 @@ msgstr ""
 msgid ""
 "<p>This channel is private and its content is restricted to some users.</p>"
 msgstr ""
+"<p>To je zasebni kanal in njegova vsebina je dostopna samo določenim "
+"uporabnikom</p>"
 
 #. module: website_slides
 #: model_terms:ir.ui.view,arch_db:website_slides.slide_detail_view
@@ -254,6 +256,8 @@ msgid ""
 "<span class=\"badge badge-pill\" id=\"facebook-badge\">0</span>\n"
 "                                                    <i class=\"fa fa-facebook-square\"/> Facebook"
 msgstr ""
+"<span class=\"badge badge-pill\" id=\"facebook-badge\">0</span>\n"
+"                                                    <i class=\"fa fa-facebook-square\"/> Facebook"
 
 #. module: website_slides
 #: model_terms:ir.ui.view,arch_db:website_slides.slide_detail_view
@@ -261,6 +265,8 @@ msgid ""
 "<span class=\"badge badge-pill\" id=\"google-badge\">0</span>\n"
 "                                                    <i class=\"fa fa-google-plus-square\"/> Google+"
 msgstr ""
+"<span class=\"badge badge-pill\" id=\"google-badge\">0</span>\n"
+"                                                    <i class=\"fa fa-google-plus-square\"/> Google+"
 
 #. module: website_slides
 #: model_terms:ir.ui.view,arch_db:website_slides.slide_detail_view
@@ -268,6 +274,8 @@ msgid ""
 "<span class=\"badge badge-pill\" id=\"linkedin-badge\">0</span>\n"
 "                                                    <i class=\"fa fa-linkedin-square\"/> LinkedIn"
 msgstr ""
+"<span class=\"badge badge-pill\" id=\"linkedin-badge\">0</span>\n"
+"                                                    <i class=\"fa fa-linkedin-square\"/> LinkedIn"
 
 #. module: website_slides
 #: model_terms:ir.ui.view,arch_db:website_slides.slide_detail_view
@@ -284,6 +292,8 @@ msgid ""
 "<span class=\"badge badge-pill\" id=\"twitter-badge\">0</span>\n"
 "                                                    <i class=\"fa fa-twitter-square\"/> Twitter"
 msgstr ""
+"<span class=\"badge badge-pill\" id=\"twitter-badge\">0</span>\n"
+"                                                    <i class=\"fa fa-twitter-square\"/> Twitter"
 
 #. module: website_slides
 #: model_terms:ir.ui.view,arch_db:website_slides.res_config_settings_view_form
@@ -1040,7 +1050,7 @@ msgstr "Noben kanal še ni ustvarjen ali objavljen."
 #. module: website_slides
 #: model_terms:ir.ui.view,arch_db:website_slides.slide_detail_view
 msgid "No presentation available."
-msgstr ""
+msgstr "Na voljo ni nobene prezentacije."
 
 #. module: website_slides
 #: model_terms:ir.ui.view,arch_db:website_slides.home
@@ -1174,7 +1184,7 @@ msgstr ""
 #. module: website_slides
 #: model_terms:ir.ui.view,arch_db:website_slides.slide_social_email
 msgid "Please"
-msgstr ""
+msgstr "Prosim"
 
 #. module: website_slides
 #. openerp-web
@@ -1356,7 +1366,7 @@ msgstr "Zaporedje"
 #. module: website_slides
 #: model_terms:ir.ui.view,arch_db:website_slides.slide_social_media
 msgid "Share Link"
-msgstr ""
+msgstr "Deli povezavo"
 
 #. module: website_slides
 #: model_terms:ir.ui.view,arch_db:website_slides.slide_detail_view
@@ -1516,6 +1526,8 @@ msgstr ""
 #: model_terms:slide.channel,access_error_msg:website_slides.channel_public
 msgid "This channel is private and its content is restricted to some users."
 msgstr ""
+"To je zasebni kanal in njegova vsebina je dostopna samo določenim "
+"uporabnikom"
 
 #. module: website_slides
 #: code:addons/website_slides/controllers/main.py:260
@@ -1524,6 +1536,8 @@ msgid ""
 "This video already exists in this channel <a target=\"_blank\" "
 "href=\"/slides/slide/%s\">click here to view it </a>"
 msgstr ""
+"Ta video že obstaja v tem kanalu <a target=\"_blank\" "
+"href=\"/slides/slide/%s\">kliknite tukaj, da si ga ogledate </a>"
 
 #. module: website_slides
 #: model:ir.model.fields,field_description:website_slides.field_slide_slide__image_thumb
@@ -1631,7 +1645,7 @@ msgstr ""
 #. module: website_slides
 #: model_terms:slide.channel,description:website_slides.channel_partial
 msgid "Used to publish slides in partner network privately."
-msgstr ""
+msgstr "Uporabljeno za objavo dokumentov dosegljivih samo partnerjem."
 
 #. module: website_slides
 #: selection:slide.slide,slide_type:0

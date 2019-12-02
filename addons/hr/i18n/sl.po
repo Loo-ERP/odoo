@@ -8,8 +8,8 @@
 # laznikd <laznik@mentis.si>, 2019
 # Martin Trigaux, 2019
 # Boris Kodelja <boris@hbs.si>, 2019
-# Tadej Lupšina <tadej@hbs.si>, 2019
 # Matjaz Mozetic <m.mozetic@matmoz.si>, 2019
+# Tadej Lupšina <tadej@hbs.si>, 2019
 # Jasmina Macur <jasmina@hbs.si>, 2019
 # 
 msgid ""
@@ -400,7 +400,7 @@ msgstr "Država rojstva"
 #. module: hr
 #: model_terms:ir.actions.act_window,help:hr.open_module_tree_department
 msgid "Create a new department"
-msgstr ""
+msgstr "Ustvari nov oddelek"
 
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_department__create_uid
@@ -930,7 +930,7 @@ msgstr ""
 #. module: hr
 #: model_terms:ir.actions.act_window,help:hr.action_hr_job
 msgid "Let's create a job position."
-msgstr ""
+msgstr "Ustvarimo delovno mesto."
 
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_department__message_main_attachment_id
@@ -1023,7 +1023,7 @@ msgstr "Sporočila"
 #: model_terms:hr.job,website_description:hr.job_marketing
 #: model_terms:hr.job,website_description:hr.job_trainee
 msgid "Must have ..."
-msgstr ""
+msgstr "Imeti morate ..."
 
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_employee__name
@@ -1064,7 +1064,7 @@ msgstr ""
 #. module: hr
 #: selection:hr.job,state:0
 msgid "Not Recruiting"
-msgstr ""
+msgstr "Ni zaposlovanja"
 
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_department__note
@@ -1263,7 +1263,7 @@ msgstr ""
 #. module: hr
 #: model_terms:ir.actions.act_window,help:hr.action_hr_job
 msgid "Ready to recruit more efficiently?"
-msgstr ""
+msgstr "Ste pripravljeni na bolj učinkovito zaposlovanje?"
 
 #. module: hr
 #: model_terms:ir.ui.view,arch_db:hr.view_hr_job_form
@@ -1314,7 +1314,7 @@ msgstr "Vir"
 #: model_terms:hr.job,website_description:hr.job_marketing
 #: model_terms:hr.job,website_description:hr.job_trainee
 msgid "Responsibilities"
-msgstr "Odgovorni"
+msgstr "Odgovornosti"
 
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_employee__activity_user_id
@@ -1452,7 +1452,7 @@ msgid ""
 "Today: Activity date is today\n"
 "Planned: Future activities."
 msgstr ""
-"Status na podlagi aktivnosti\n"
+"Status na osnovi aktivnosti\n"
 "Zapadel: Rok je že prekoračen\n"
 "Danes: Datum aktivnosti je danes\n"
 "Planirano: Bodoče aktivnosti."
