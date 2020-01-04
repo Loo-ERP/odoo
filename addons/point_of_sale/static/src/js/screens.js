@@ -197,6 +197,9 @@ var ScreenWidget = PosBaseWidget.extend({
         order = order || this.pos.get_order();
         this.invoicing = false;
         order.finalized = false;
+        if (error.no_show_error){
+			return;
+		}
         if (error.message === 'Missing Customer') {
             this.gui.show_popup('confirm',{
                 'title': _t('Please select the Customer'),
@@ -2168,8 +2171,11 @@ var PaymentScreenWidget = ScreenWidget.extend({
                 self.gui.show_screen('receipt');
             });
         } else {
-            this.pos.push_order(order);
-            this.gui.show_screen('receipt');
+        	var invoiced = this.pos.push_order(order);
+        	invoiced.fail(self._handleFailedPushForInvoice.bind(self, order, true)); // refresh
+            invoiced.done(function(){
+            	self.gui.show_screen('receipt');
+            });
         }
 
     },
