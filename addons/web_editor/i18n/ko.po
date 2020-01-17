@@ -7,7 +7,7 @@
 # Martin Trigaux, 2018
 # Link Up링크업 <linkup.way@gmail.com>, 2018
 # Linkup <link-up@naver.com>, 2018
-# JH CHOI <hwangtog@gmail.com>, 2019
+# JH CHOI <hwangtog@gmail.com>, 2020
 # 
 msgid ""
 msgstr ""
@@ -15,7 +15,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-11-14 07:35+0000\n"
 "PO-Revision-Date: 2018-08-24 09:33+0000\n"
-"Last-Translator: JH CHOI <hwangtog@gmail.com>, 2019\n"
+"Last-Translator: JH CHOI <hwangtog@gmail.com>, 2020\n"
 "Language-Team: Korean (https://www.transifex.com/odoo/teams/41243/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -583,7 +583,7 @@ msgstr "전체 화면"
 #: code:addons/web_editor/static/src/xml/backend.xml:21
 #, python-format
 msgid "Fullscreen"
-msgstr ""
+msgstr "전체화면"
 
 #. module: web_editor
 #: model:ir.model,name:web_editor.model_ir_http
@@ -742,6 +742,8 @@ msgid ""
 "In this mode, you can only translate texts. To change the structure of the page, you must edit the master page.\n"
 "        Each modification on the master page is automatically applied to all translated versions."
 msgstr ""
+"이 모드에서는 텍스트 만 번역 할 수 있습니다. 페이지 구조를 변경하려면 마스터 페이지를 편집해야 합니다. \n"
+"      마스터 페이지의 각 수정 사항은 모든 번역된 버전에 자동으로 적용됩니다."
 
 #. module: web_editor
 #. openerp-web
@@ -797,7 +799,7 @@ msgstr "비디오 삽입"
 #: code:addons/web_editor/static/src/xml/editor.xml:200
 #, python-format
 msgid "Instagram"
-msgstr ""
+msgstr "인스타그램"
 
 #. module: web_editor
 #. openerp-web
@@ -977,7 +979,7 @@ msgstr "내어쓰기"
 #: code:addons/web_editor/static/src/xml/editor.xml:270
 #, python-format
 msgid "Outline"
-msgstr ""
+msgstr "외곽선"
 
 #. module: web_editor
 #. openerp-web

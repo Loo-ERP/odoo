@@ -181,6 +181,7 @@ class PosOrder(models.Model):
             # considering partner's sale pricelist's currency
             'currency_id': self.pricelist_id.currency_id.id,
             'user_id': self.user_id.id,
+            'fiscal_position_id': self.fiscal_position_id.id,
         }
 
     @api.model
@@ -777,7 +778,9 @@ class PosOrder(models.Model):
             _logger.info("Procesando %s de %s, TPV: %s", count, total, pos_order.session_id.config_id.display_name)
             if to_invoice:
                 pos_order.action_pos_order_invoice()
-                pos_order.invoice_id.sudo().with_context(force_company=self.env.user.company_id.id).action_invoice_open()
+                pos_order.invoice_id.sudo().with_context(
+                    force_company=self.env.user.company_id.id, pos_picking_id=pos_order.picking_id
+                ).action_invoice_open()
                 pos_order.account_move = pos_order.invoice_id.move_id
         _logger.info(u"Proceso terminado con exito")
         return order_ids
