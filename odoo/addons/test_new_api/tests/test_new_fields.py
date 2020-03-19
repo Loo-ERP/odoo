@@ -1,6 +1,8 @@
 #
 # test cases for new-style fields
 #
+import base64
+
 from datetime import date, datetime, time
 
 from odoo import fields
@@ -932,6 +934,13 @@ class TestFields(common.TransactionCase):
         with self.assertRaises(AccessError):
             cat1.name
 
+        # take a discussion, use mapped(), and check prefetching
+        self.env.clear()
+        discussion = self.env.ref('test_new_api.discussion_0')
+        discussion.mapped('messages.name')
+        # message authors are ready to prefetch
+        self.assertTrue(discussion._prefetch.get('res.users'))
+
     def test_40_new(self):
         """ test new records. """
         discussion = self.env.ref('test_new_api.discussion_0')
@@ -1083,6 +1092,27 @@ class TestFields(common.TransactionCase):
         discussion.copy({'messages': [(6, 0, message1.ids)]})
         self.assertEqual(count(message), 1)
         self.assertEqual(count(message1), 0)
+
+    def test_85_binary_guess_zip(self):
+        from odoo.addons.base.tests.test_mimetypes import ZIP
+        # Regular ZIP files can be uploaded by non-admin users
+        self.env['test_new_api.binary_svg'].sudo(
+            self.env.ref('base.user_demo'),
+        ).create({
+            'name': 'Test without attachment',
+            'image_wo_attachment': base64.b64decode(ZIP),
+        })
+
+    def test_86_text_base64_guess_svg(self):
+        from odoo.addons.base.tests.test_mimetypes import SVG
+        with self.assertRaises(UserError) as e:
+            self.env['test_new_api.binary_svg'].sudo(
+                self.env.ref('base.user_demo'),
+            ).create({
+                'name': 'Test without attachment',
+                'image_wo_attachment': SVG.decode("utf-8"),
+            })
+        self.assertEqual(e.exception.name, 'Only admins can upload SVG files.')
 
     def test_90_binary_svg(self):
         from odoo.addons.base.tests.test_mimetypes import SVG
@@ -1273,6 +1303,35 @@ class TestX2many(common.TransactionCase):
 
         result = recs.search([('id', 'in', recs.ids), ('lines', '!=', False)])
         self.assertEqual(result, recs - recZ)
+
+    def test_write_many2many(self):
+        """ Tests write on many2many fields. """
+        tags = self.env['test_new_api.multi.tag'].create([
+            {'name': 'Alpha'},
+            {'name': 'Bravo', 'active': False},
+        ])
+        line = self.env['test_new_api.multi.line'].create(
+            {'tags': [[6, 0, tags.ids]]},
+        )
+
+        # unreadable active=False do not get discarded on save
+        self.assertEqual(line.tags, tags[0])
+        self.assertEqual(line.with_context(active_test=False).tags, tags)
+        line.tags = [(6, 0, [])]
+        self.assertEqual(line.tags, tags.browse())
+        self.assertEqual(line.with_context(active_test=False).tags, tags[1])
+
+    def test_custom_m2m(self):
+        model_id = self.env['ir.model']._get_id('res.partner')
+        field = self.env['ir.model.fields'].create({
+            'name': 'x_foo',
+            'field_description': 'Foo',
+            'model_id': model_id,
+            'ttype': 'many2many',
+            'relation': 'res.country',
+            'store': False,
+        })
+        self.assertTrue(field.unlink())
 
 
 class TestHtmlField(common.TransactionCase):

@@ -1256,7 +1256,7 @@ class Meeting(models.Model):
         """
         if self.interval and self.interval < 0:
             raise UserError(_('interval cannot be negative.'))
-        if self.count and self.count <= 0:
+        if self.count < 0:
             raise UserError(_('Event recurrence interval cannot be negative.'))
 
         def get_week_string(freq):
@@ -1281,7 +1281,7 @@ class Meeting(models.Model):
         def get_end_date():
             final_date = fields.Date.to_string(self.final_date)
             end_date_new = ''.join((re.compile('\d')).findall(final_date)) + 'T235959Z' if final_date else False
-            return (self.end_type == 'count' and (';COUNT=' + str(self.count)) or '') +\
+            return (self.end_type == 'count' and (';COUNT=' + str(max(1, self.count))) or '') +\
                 ((end_date_new and self.end_type == 'end_date' and (';UNTIL=' + end_date_new)) or '')
 
         freq = self.rrule_type  # day/week/month/year
@@ -1768,7 +1768,9 @@ class Meeting(models.Model):
                 new_arg = (arg[0], arg[1], get_real_ids(arg[2]))
             new_args.append(new_arg)
 
-        if not self._context.get('virtual_id', True):
+        # update_custom_fields: context used by the ORM to check if custom fields (studio) should be updated
+        virtual_id_fallback = not self._context.get('update_custom_fields')
+        if not self._context.get('virtual_id', virtual_id_fallback):
             return super(Meeting, self)._search(new_args, offset=offset, limit=limit, order=order, count=count, access_rights_uid=access_rights_uid)
 
         if any(arg[0] == 'start' for arg in args) and \
