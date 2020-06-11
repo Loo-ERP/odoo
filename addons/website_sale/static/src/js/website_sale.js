@@ -253,7 +253,7 @@ sAnimations.registry.WebsiteSale = sAnimations.Class.extend(ProductConfiguratorM
             productIDs.push($(elem).find('span[data-product-id]').data('product-id'));
         });
         $input.data('update_change', true);
-
+        var def = new $.Deferred();
         this._rpc({
             route: "/shop/cart/update_json",
             params: {
@@ -297,7 +297,9 @@ sAnimations.registry.WebsiteSale = sAnimations.Class.extend(ProductConfiguratorM
                 }
                 $input.val(data.quantity);
             }
+            def.resolve(data);
         });
+        return def;
     },
     /**
      * @private
