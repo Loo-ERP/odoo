@@ -922,7 +922,7 @@ class PosOrder(models.Model):
                     if self.env.user.partner_id.email:
                         return_picking.message_post(body=message)
                     else:
-                        return_picking.message_post(body=message)
+                        return_picking.sudo().message_post(body=message)
 
             for line in lines_to_picking:
                 moves |= Move.create(order._prepare_stock_move_vals(line, order_picking, return_picking, picking_type, return_pick_type, location_id, destination_id))

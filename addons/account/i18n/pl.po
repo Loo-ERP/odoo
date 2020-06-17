@@ -29,9 +29,9 @@
 # Grzegorz Krukar <grzegorzgk1@gmail.com>, 2019
 # Dariusz Żbikowski <darek@krokus.com.pl>, 2019
 # Piotr Cierkosz <piotr.w.cierkosz@gmail.com>, 2019
-# Grzegorz Grzelak <grzegorz.grzelak@openglobe.pl>, 2019
 # Karol Rybak <karolrybak85@gmail.com>, 2019
 # Maksym <ms@myodoo.pl>, 2020
+# Grzegorz Grzelak <grzegorz.grzelak@openglobe.pl>, 2020
 # Paweł Wodyński <pw@myodoo.pl>, 2020
 # 
 msgid ""
@@ -855,7 +855,7 @@ msgstr ""
 #. module: account
 #: model:ir.model,name:account.model_account_cash_rounding
 msgid "Account Cash Rounding"
-msgstr ""
+msgstr "Zaokrąglanie gotówki na koncie"
 
 #. module: account
 #: model:ir.model,name:account.model_account_chart_template
@@ -9770,7 +9770,7 @@ msgstr "Podatek do zatwierdzenia"
 #. module: account
 #: selection:res.config.settings,show_line_subtotals_tax_selection:0
 msgid "Tax-Excluded"
-msgstr ""
+msgstr "Netto"
 
 #. module: account
 #: selection:res.config.settings,show_line_subtotals_tax_selection:0
