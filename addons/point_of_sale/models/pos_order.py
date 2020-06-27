@@ -290,10 +290,10 @@ class PosOrder(models.Model):
                             line1, line2 = res
                             line1['tax_ids'] = [(6, 0, [])]
                             line2['tax_ids'] = [(6, 0, [])]
-                            line1 = Product._convert_prepared_anglosaxon_line(line1, order.partner_id)
+                            line1 = Product._convert_prepared_anglosaxon_line(line1, order.partner_id.id)
                             insert_data('product', line1)
     
-                            line2 = Product._convert_prepared_anglosaxon_line(line2, order.partner_id)
+                            line2 = Product._convert_prepared_anglosaxon_line(line2, order.partner_id.id)
                             insert_data('product', line2)
 
         for order in self.filtered(lambda o: not o.account_move or o.state == 'paid'):
