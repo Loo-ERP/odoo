@@ -333,6 +333,9 @@ class SaleOrder(models.Model):
 
         if self.partner_id.team_id:
             values['team_id'] = self.partner_id.team_id.id
+
+        if self.user_id.id == values.get('user_id'):
+            del values['user_id']
         self.update(values)
 
     @api.onchange('partner_id')
@@ -1169,7 +1172,7 @@ class SaleOrderLine(models.Model):
     product_updatable = fields.Boolean(compute='_compute_product_updatable', string='Can Edit Product', readonly=True, default=True)
     product_uom_qty = fields.Float(string='Ordered Quantity', digits=dp.get_precision('Product Unit of Measure'), required=True, default=1.0)
     product_uom = fields.Many2one('uom.uom', string='Unit of Measure')
-    product_custom_attribute_value_ids = fields.One2many('product.attribute.custom.value', 'sale_order_line_id', string='User entered custom product attribute values')
+    product_custom_attribute_value_ids = fields.One2many('product.attribute.custom.value', 'sale_order_line_id', string='User entered custom product attribute values', copy=True)
 
     # M2M holding the values of product.attribute with create_variant field set to 'no_variant'
     # It allows keeping track of the extra_price associated to those attribute values and add them to the SO line description
@@ -1466,7 +1469,7 @@ class SaleOrderLine(models.Model):
             return product.with_context(pricelist=self.order_id.pricelist_id.id).price
         product_context = dict(self.env.context, partner_id=self.order_id.partner_id.id, date=self.order_id.date_order, uom=self.product_uom.id)
 
-        final_price, rule_id = self.order_id.pricelist_id.with_context(product_context).get_product_price_rule(self.product_id, self.product_uom_qty or 1.0, self.order_id.partner_id)
+        final_price, rule_id = self.order_id.pricelist_id.with_context(product_context).get_product_price_rule(product or self.product_id, self.product_uom_qty or 1.0, self.order_id.partner_id)
         base_price, currency = self.with_context(product_context)._get_real_price_currency(product, rule_id, self.product_uom_qty, self.product_uom, self.order_id.pricelist_id.id)
         if currency != self.order_id.pricelist_id.currency_id:
             base_price = currency._convert(
