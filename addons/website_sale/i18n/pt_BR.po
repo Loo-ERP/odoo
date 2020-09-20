@@ -5,7 +5,7 @@
 # Translators:
 # Peter Leaf <pablleaf@gmail.com>, 2018
 # Hélio Dias de Brito Teixeira <helio.dbt@gmail.com>, 2018
-# Rodrigo de Almeida Sottomaior Macedo <rmsolucoeseminformatic4@gmail.com>, 2018
+# Rodrigo de Almeida Sottomaior Macedo <rmsolucoeseminformatica@protonmail.com>, 2018
 # Rui Andrada <shingonoide@gmail.com>, 2018
 # falexandresilva <falexandresilva@gmail.com>, 2018
 # André Augusto Firmino Cordeiro <a.cordeito@gmail.com>, 2018
@@ -32,6 +32,7 @@
 # Luiz Fernando <lfpsgs@outlook.com>, 2020
 # Fernando Colus <fcolus1@gmail.com>, 2020
 # PopSolutions Cooperativa Digital <popsolutions.co@gmail.com>, 2020
+# Kevin Harrings <kha@odoo.com>, 2020
 # Vanderlei Romera <vanderleiromera@gmail.com>, 2020
 # 
 msgid ""
@@ -522,7 +523,7 @@ msgstr "Adicionar ao carrinho"
 #: code:addons/website_sale/static/src/js/website_sale_options.js:88
 #, python-format
 msgid "Add to cart"
-msgstr ""
+msgstr "Adicionar ao carrinho"
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.wizard_checkout
@@ -746,7 +747,7 @@ msgstr ""
 #. module: website_sale
 #: model:product.public.category,name:website_sale.public_category_chairs
 msgid "Chairs"
-msgstr ""
+msgstr "Cadeiras"
 
 #. module: website_sale
 #: model:ir.model.fields,field_description:website_sale.field_product_public_category__child_id
@@ -886,7 +887,7 @@ msgstr "Contato"
 #: code:addons/website_sale/static/src/js/website_sale_options.js:87
 #, python-format
 msgid "Continue Shopping"
-msgstr ""
+msgstr "Continuar as compras"
 
 #. module: website_sale
 #. openerp-web
@@ -996,7 +997,7 @@ msgstr "Descrição para o site"
 #. module: website_sale
 #: model:product.public.category,name:website_sale.public_category_desks
 msgid "Desks"
-msgstr ""
+msgstr "Mesas"
 
 #. module: website_sale
 #: model:ir.model.fields,help:website_sale.field_product_product__website_sequence
@@ -1763,7 +1764,7 @@ msgstr "Imprimir"
 #: code:addons/website_sale/static/src/js/website_sale_options.js:86
 #, python-format
 msgid "Proceed to Checkout"
-msgstr ""
+msgstr "Proceder ao checkout"
 
 #. module: website_sale
 #: model_terms:ir.actions.act_window,help:website_sale.action_unpaid_orders_ecommerce

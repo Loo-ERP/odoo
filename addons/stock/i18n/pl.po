@@ -748,6 +748,12 @@ msgid "Available Products"
 msgstr "Dostępne produkty"
 
 #. module: stock
+#: code:addons/stock/models/product.py:581
+#, python-format
+msgid "Available quantity should be set to zero before changing type"
+msgstr ""
+
+#. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_move__backorder_id
 #: model:ir.model.fields,field_description:stock.field_stock_picking__backorder_id
 msgid "Back Order of"
@@ -2595,7 +2601,7 @@ msgstr ""
 #: code:addons/stock/models/product.py:254
 #, python-format
 msgid "Invalid domain left operand %s"
-msgstr ""
+msgstr "Niepoprawny operator opuszczenia domeny %s"
 
 #. module: stock
 #: code:addons/stock/models/product.py:256
@@ -4479,7 +4485,7 @@ msgstr "Propagacja grup zapotrzebowania"
 #. module: stock
 #: selection:stock.rule,action:0
 msgid "Pull & Push"
-msgstr ""
+msgstr "Pociągnij i popchnij"
 
 #. module: stock
 #: selection:stock.rule,action:0
