@@ -718,7 +718,7 @@ class PosOrder(models.Model):
     @api.multi
     def action_pos_order_paid(self):
         if not self.test_paid():
-            raise UserError(_("Order is not paid."))
+            raise UserError(_("Order: %s ID: %s is not paid.") % (self.display_name, self.id))
         self.write({'state': 'paid'})
         return self.create_picking()
 
