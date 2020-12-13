@@ -281,6 +281,20 @@ class Repair(models.Model):
                 repair.write({'state': 'done'})
         return True
 
+    def _prepare_invoice_vals(self):
+        fp_id = self.partner_id.property_account_position_id.id or \
+                self.env['account.fiscal.position'].get_fiscal_position(self.partner_id.id, delivery_id=self.address_id.id)
+        return {
+            'name': self.name,
+            'origin': self.name,
+            'type': 'out_invoice',
+            'account_id': self.partner_id.property_account_receivable_id.id,
+            'partner_id': self.partner_invoice_id.id or self.partner_id.id,
+            'currency_id': self.pricelist_id.currency_id.id,
+            'comment': self.quotation_notes,
+            'fiscal_position_id': fp_id
+        }
+
     @api.multi
     def action_invoice_create(self, group=False):
         """ Creates invoice(s) for repair order.
@@ -306,74 +320,16 @@ class Repair(models.Model):
                 else:
                     if not repair.partner_id.property_account_receivable_id:
                         raise UserError(_('No account defined for partner "%s".') % repair.partner_id.name)
-                    fp_id = repair.partner_id.property_account_position_id.id or self.env['account.fiscal.position'].get_fiscal_position(repair.partner_id.id, delivery_id=repair.address_id.id)
-                    invoice = Invoice.create({
-                        'name': repair.name,
-                        'origin': repair.name,
-                        'type': 'out_invoice',
-                        'account_id': repair.partner_id.property_account_receivable_id.id,
-                        'partner_id': repair.partner_invoice_id.id or repair.partner_id.id,
-                        'currency_id': repair.pricelist_id.currency_id.id,
-                        'comment': repair.quotation_notes,
-                        'fiscal_position_id': fp_id
-                    })
+                    invoice = Invoice.create(repair._prepare_invoice_vals())
                     invoices_group[repair.partner_invoice_id.id] = invoice
                 repair.write({'invoiced': True, 'invoice_id': invoice.id})
 
                 for operation in repair.operations:
                     if operation.type == 'add':
-                        if group:
-                            name = repair.name + '-' + operation.name
-                        else:
-                            name = operation.name
-
-                        if operation.product_id.property_account_income_id:
-                            account_id = operation.product_id.property_account_income_id.id
-                        elif operation.product_id.categ_id.property_account_income_categ_id:
-                            account_id = operation.product_id.categ_id.property_account_income_categ_id.id
-                        else:
-                            raise UserError(_('No account defined for product "%s".') % operation.product_id.name)
-
-                        invoice_line = InvoiceLine.create({
-                            'invoice_id': invoice.id,
-                            'name': name,
-                            'origin': repair.name,
-                            'account_id': account_id,
-                            'quantity': operation.product_uom_qty,
-                            'invoice_line_tax_ids': [(6, 0, [x.id for x in operation.tax_id])],
-                            'uom_id': operation.product_uom.id,
-                            'price_unit': operation.price_unit,
-                            'price_subtotal': operation.product_uom_qty * operation.price_unit,
-                            'product_id': operation.product_id and operation.product_id.id or False
-                        })
+                        invoice_line = InvoiceLine.create(operation._prepare_invoice_line(repair, invoice, group))
                         operation.write({'invoiced': True, 'invoice_line_id': invoice_line.id})
                 for fee in repair.fees_lines:
-                    if group:
-                        name = repair.name + '-' + fee.name
-                    else:
-                        name = fee.name
-                    if not fee.product_id:
-                        raise UserError(_('No product defined on fees.'))
-
-                    if fee.product_id.property_account_income_id:
-                        account_id = fee.product_id.property_account_income_id.id
-                    elif fee.product_id.categ_id.property_account_income_categ_id:
-                        account_id = fee.product_id.categ_id.property_account_income_categ_id.id
-                    else:
-                        raise UserError(_('No account defined for product "%s".') % fee.product_id.name)
-
-                    invoice_line = InvoiceLine.create({
-                        'invoice_id': invoice.id,
-                        'name': name,
-                        'origin': repair.name,
-                        'account_id': account_id,
-                        'quantity': fee.product_uom_qty,
-                        'invoice_line_tax_ids': [(6, 0, [x.id for x in fee.tax_id])],
-                        'uom_id': fee.product_uom.id,
-                        'product_id': fee.product_id and fee.product_id.id or False,
-                        'price_unit': fee.price_unit,
-                        'price_subtotal': fee.product_uom_qty * fee.price_unit
-                    })
+                    invoice_line = InvoiceLine.create(fee._prepare_invoice_line(repair, invoice, group))
                     fee.write({'invoiced': True, 'invoice_line_id': invoice_line.id})
                 invoice.compute_taxes()
                 res[repair.id] = invoice.id
@@ -443,50 +399,10 @@ class Repair(models.Model):
 
             moves = self.env['stock.move']
             for operation in repair.operations:
-                move = Move.create({
-                    'name': repair.name,
-                    'product_id': operation.product_id.id,
-                    'product_uom_qty': operation.product_uom_qty,
-                    'product_uom': operation.product_uom.id,
-                    'partner_id': repair.address_id.id,
-                    'location_id': operation.location_id.id,
-                    'location_dest_id': operation.location_dest_id.id,
-                    'move_line_ids': [(0, 0, {'product_id': operation.product_id.id,
-                                           'lot_id': operation.lot_id.id, 
-                                           'product_uom_qty': 0,  # bypass reservation here
-                                           'product_uom_id': operation.product_uom.id,
-                                           'qty_done': operation.product_uom_qty,
-                                           'package_id': False,
-                                           'result_package_id': False,
-                                           'owner_id': owner_id,
-                                           'location_id': operation.location_id.id, #TODO: owner stuff
-                                           'location_dest_id': operation.location_dest_id.id,})],
-                    'repair_id': repair.id,
-                    'origin': repair.name,
-                })
+                move = Move.create(operation._prepare_move_vals(repair, owner_id))
                 moves |= move
                 operation.write({'move_id': move.id, 'state': 'done'})
-            move = Move.create({
-                'name': repair.name,
-                'product_id': repair.product_id.id,
-                'product_uom': repair.product_uom.id or repair.product_id.uom_id.id,
-                'product_uom_qty': repair.product_qty,
-                'partner_id': repair.address_id.id,
-                'location_id': repair.location_id.id,
-                'location_dest_id': repair.location_id.id,
-                'move_line_ids': [(0, 0, {'product_id': repair.product_id.id,
-                                           'lot_id': repair.lot_id.id, 
-                                           'product_uom_qty': 0,  # bypass reservation here
-                                           'product_uom_id': repair.product_uom.id or repair.product_id.uom_id.id,
-                                           'qty_done': repair.product_qty,
-                                           'package_id': False,
-                                           'result_package_id': False,
-                                           'owner_id': owner_id,
-                                           'location_id': repair.location_id.id, #TODO: owner stuff
-                                           'location_dest_id': repair.location_id.id,})],
-                'repair_id': repair.id,
-                'origin': repair.name,
-            })
+            move = Move.create(repair._prepare_move_vals(owner_id))
             consumed_lines = moves.mapped('move_line_ids')
             produced_lines = move.move_line_ids
             moves |= move
@@ -494,6 +410,30 @@ class Repair(models.Model):
             produced_lines.write({'consume_line_ids': [(6, 0, consumed_lines.ids)]})
             res[repair.id] = move.id
         return res
+
+    @api.multi
+    def _prepare_move_vals(self, owner_id):
+        return {
+            'name': self.name,
+            'product_id': self.product_id.id,
+            'product_uom': self.product_uom.id or self.product_id.uom_id.id,
+            'product_uom_qty': self.product_qty,
+            'partner_id': self.address_id.id,
+            'location_id': self.location_id.id,
+            'location_dest_id': self.location_id.id,
+            'move_line_ids': [(0, 0, {'product_id': self.product_id.id,
+                                       'lot_id': self.lot_id.id,
+                                       'product_uom_qty': 0,  # bypass reservation here
+                                       'product_uom_id': self.product_uom.id or self.product_id.uom_id.id,
+                                       'qty_done': self.product_qty,
+                                       'package_id': False,
+                                       'result_package_id': False,
+                                       'owner_id': owner_id,
+                                       'location_id': self.location_id.id, #TODO: owner stuff
+                                       'location_dest_id': self.location_id.id,})],
+            'repair_id': self.id,
+            'origin': self.name,
+        }
 
 
 class RepairLine(models.Model):
@@ -626,6 +566,57 @@ class RepairLine(models.Model):
             else:
                 self.price_unit = price
 
+    @api.multi
+    def _prepare_invoice_line(self, repair, invoice, group):
+        if group:
+            name = repair.name + '-' + self.name
+        else:
+            name = self.name
+
+        if self.product_id.property_account_income_id:
+            account_id = self.product_id.property_account_income_id.id
+        elif self.product_id.categ_id.property_account_income_categ_id:
+            account_id = self.product_id.categ_id.property_account_income_categ_id.id
+        else:
+            raise UserError(_('No account defined for product "%s".') % self.product_id.name)
+
+        return {
+            'invoice_id': invoice.id,
+            'name': name,
+            'origin': repair.name,
+            'account_id': account_id,
+            'quantity': self.product_uom_qty,
+            'invoice_line_tax_ids': [(6, 0, [x.id for x in self.tax_id])],
+            'uom_id': self.product_uom.id,
+            'price_unit': self.price_unit,
+            'price_subtotal': self.product_uom_qty * self.price_unit,
+            'product_id': self.product_id and self.product_id.id or False
+        }
+
+    @api.multi
+    def _prepare_move_vals(self, repair, owner_id):
+        return {
+            'name': repair.name,
+            'product_id': self.product_id.id,
+            'product_uom_qty': self.product_uom_qty,
+            'product_uom': self.product_uom.id,
+            'partner_id': repair.address_id.id,
+            'location_id': self.location_id.id,
+            'location_dest_id': self.location_dest_id.id,
+            'move_line_ids': [(0, 0, {'product_id': self.product_id.id,
+                                   'lot_id': self.lot_id.id,
+                                   'product_uom_qty': 0,  # bypass reservation here
+                                   'product_uom_id': self.product_uom.id,
+                                   'qty_done': self.product_uom_qty,
+                                   'package_id': False,
+                                   'result_package_id': False,
+                                   'owner_id': owner_id,
+                                   'location_id': self.location_id.id, #TODO: owner stuff
+                                   'location_dest_id': self.location_dest_id.id,})],
+            'repair_id': repair.id,
+            'origin': repair.name,
+        }
+
 
 class RepairFee(models.Model):
     _name = 'repair.fee'
@@ -703,3 +694,31 @@ class RepairFee(models.Model):
                 return {'warning': warning}
             else:
                 self.price_unit = price
+
+    @api.multi
+    def _prepare_invoice_line(self, repair, invoice, group):
+        if group:
+            name = repair.name + '-' + self.name
+        else:
+            name = self.name
+        if not self.product_id:
+            raise UserError(_('No product defined on fees.'))
+
+        if self.product_id.property_account_income_id:
+            account_id = self.product_id.property_account_income_id.id
+        elif self.product_id.categ_id.property_account_income_categ_id:
+            account_id = self.product_id.categ_id.property_account_income_categ_id.id
+        else:
+            raise UserError(_('No account defined for product "%s".') % self.product_id.name)
+        return {
+            'invoice_id': invoice.id,
+            'name': name,
+            'origin': repair.name,
+            'account_id': account_id,
+            'quantity': self.product_uom_qty,
+            'invoice_line_tax_ids': [(6, 0, [x.id for x in self.tax_id])],
+            'uom_id': self.product_uom.id,
+            'product_id': self.product_id and self.product_id.id or False,
+            'price_unit': self.price_unit,
+            'price_subtotal': self.product_uom_qty * self.price_unit
+        }
