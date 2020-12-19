@@ -1782,6 +1782,8 @@ exports.Orderline = Backbone.Model.extend({
                     else {
                         total_included += tax_amount;
                     }
+                    // Keep base amount used for the current tax
+                    var tax_base = base;
                     if (tax.include_base_amount) {
                         base += tax_amount;
                     }
@@ -1789,7 +1791,7 @@ exports.Orderline = Backbone.Model.extend({
                         id: tax.id,
                         amount: tax_amount,
                         name: tax.name,
-                        base: base,
+                        base: tax_base,
                     };
                     list_taxes.push(data);
                 }
@@ -1798,7 +1800,8 @@ exports.Orderline = Backbone.Model.extend({
         return {
             taxes: list_taxes,
             total_excluded: round_pr(total_excluded, currency_rounding_bak),
-            total_included: round_pr(total_included, currency_rounding_bak)
+            total_included: round_pr(total_included, currency_rounding_bak),
+            base: base,
         };
     },
     get_price_reduce: function(){
