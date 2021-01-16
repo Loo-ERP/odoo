@@ -132,7 +132,7 @@ class StockPicking(models.Model):
                             pick.send_to_shipper()
                         pick._add_delivery_cost_to_so()
 
-        self.env.cr.after('commit', _process_delivery_carrier)
+        self.env.cr.before('commit', _process_delivery_carrier)
         return res
 
     @api.multi
