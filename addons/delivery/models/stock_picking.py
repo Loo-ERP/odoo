@@ -3,7 +3,7 @@
 
 import json
 
-from odoo import models, fields, api, _
+from odoo import models, fields, api, _, registry
 from odoo.exceptions import UserError
 
 from odoo.addons import decimal_precision as dp
@@ -116,11 +116,23 @@ class StockPicking(models.Model):
     @api.multi
     def action_done(self):
         res = super(StockPicking, self).action_done()
-        for pick in self:
-            if pick.carrier_id:
-                if pick.carrier_id.integration_level == 'rate_and_ship':
-                    pick.send_to_shipper()
-                pick._add_delivery_cost_to_so()
+        picking_ids = self.ids
+        dbname = self.env.cr.dbname
+        _context = self._context.copy()
+        uid = self.env.uid
+
+        def _process_delivery_carrier():
+            db_registry = registry(dbname)
+            with api.Environment.manage(), db_registry.cursor() as cr:
+                env = api.Environment(cr, uid, _context)
+                picking_recs = env['stock.picking'].browse(picking_ids)
+                for pick in picking_recs:
+                    if pick.carrier_id:
+                        if pick.carrier_id.integration_level == 'rate_and_ship':
+                            pick.send_to_shipper()
+                        pick._add_delivery_cost_to_so()
+
+        self.env.cr.after('commit', _process_delivery_carrier)
         return res
 
     @api.multi
