@@ -189,6 +189,7 @@ class Cursor(object):
 
         # event handlers, see method after() below
         self._event_handlers = {'commit': [], 'rollback': []}
+        self._pre_event_handlers = {'commit': [], 'rollback': []}
 
     def __build_dict(self, row):
         return {d.name: row[i] for i, d in enumerate(self._obj.description)}
@@ -364,16 +365,34 @@ class Cursor(object):
         """
         self._event_handlers[event].append(func)
 
+    @check
+    def before(self, event, func):
+        """ Register an event handler.
+
+            :param event: the event, either `'commit'` or `'rollback'`
+            :param func: a callable object, called with no argument before the
+                event occurs
+        """
+        self._pre_event_handlers[event].append(func)
+
     def _pop_event_handlers(self):
         # return the current handlers, and reset them on self
         result = self._event_handlers
         self._event_handlers = {'commit': [], 'rollback': []}
         return result
 
+    def _pop_pre_event_handlers(self):
+        # return the current handlers, and reset them on self
+        result = self._pre_event_handlers
+        self._pre_event_handlers = {'commit': [], 'rollback': []}
+        return result
+
     @check
     def commit(self):
         """ Perform an SQL `COMMIT`
         """
+        for func in self._pop_pre_event_handlers()['commit']:
+            func()
         result = self._cnx.commit()
         for func in self._pop_event_handlers()['commit']:
             func()
@@ -383,6 +402,8 @@ class Cursor(object):
     def rollback(self):
         """ Perform an SQL `ROLLBACK`
         """
+        for func in self._pop_pre_event_handlers()['rollback']:
+            func()
         result = self._cnx.rollback()
         for func in self._pop_event_handlers()['rollback']:
             func()
