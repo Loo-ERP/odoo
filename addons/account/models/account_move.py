@@ -603,7 +603,7 @@ class AccountMoveLine(models.Model):
             #computing the `reconciled` field.
             reconciled = False
             digits_rounding_precision = line.company_id.currency_id.rounding
-            if (line.matched_debit_ids or line.matched_credit_ids) and float_is_zero(amount, precision_rounding=digits_rounding_precision):
+            if float_is_zero(amount, precision_rounding=digits_rounding_precision):
                 if line.currency_id and line.amount_currency:
                     if float_is_zero(amount_residual_currency, precision_rounding=line.currency_id.rounding):
                         reconciled = True
@@ -875,7 +875,7 @@ class AccountMoveLine(models.Model):
         caba_connected_amls = amls.filtered(lambda x: x.move_id.tax_cash_basis_rec_id) + caba_reconciled_amls
         matched_percentages = caba_connected_amls._get_matched_percentage()
         if (
-                all(matched_percentages[aml.move_id.id] >= 1.0 for aml in caba_connected_amls)
+                (all(amls.mapped('tax_exigible')) or all(matched_percentages[aml.move_id.id] >= 1.0 for aml in caba_connected_amls))
                 and
                 (
                     currency and float_is_zero(total_amount_currency, precision_rounding=currency.rounding) or

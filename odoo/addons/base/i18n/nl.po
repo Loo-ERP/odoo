@@ -27209,6 +27209,8 @@ msgid ""
 "The m2o field %s is required but declares its ondelete policy as being 'set "
 "null'. Only 'restrict' and 'cascade' make sense."
 msgstr ""
+"Het m2o-veld %s is verplicht, maar geeft aan dat het beleid voor ondelete is"
+" ingesteld op 'null'. Alleen 'beperken' en 'cascade' hebben zin."
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_filters__action_id

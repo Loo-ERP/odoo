@@ -138,6 +138,8 @@ class Inventory(models.Model):
             self.package_id = False
         if self.filter != 'category':
             self.category_id = False
+        if self.filter != 'product':
+            self.exhausted = False
         if self.filter == 'product':
             self.exhausted = True
             if self.product_id:
@@ -190,7 +192,7 @@ class Inventory(models.Model):
         _logger.info("Empezando ajuste de inventario")
         self.action_check()
         _logger.info("Terminada creacion de ajustes, se validara ajuste, por favor espere...")
-        self.write({'state': 'done'})
+        self.write({'state': 'done', 'date': fields.Datetime.now()})
         self.post_inventory()
         _logger.info("Validacion de ajuste terminada")
         return True
