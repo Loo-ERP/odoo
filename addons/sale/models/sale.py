@@ -642,7 +642,7 @@ class SaleOrder(models.Model):
                 invoices[group_key].reference = sale_orders.reference
 
         if not invoices:
-            _logger.error("Pedidos con error de facturacion IDs: %s", ", ".join(self.ids))
+            _logger.error("Pedidos con error de facturacion IDs: %s", str(self.ids))
             raise UserError(_('There is no invoiceable line. If a product has a Delivered quantities invoicing policy, please make sure that a quantity has been delivered.'))
 
         self._finalize_invoices(invoices, references)
