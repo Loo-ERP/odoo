@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-
+import logging
 from datetime import datetime, timedelta
 from functools import partial
 from itertools import groupby
@@ -15,6 +15,8 @@ from odoo.tools import float_is_zero, float_compare
 from odoo.addons import decimal_precision as dp
 
 from werkzeug.urls import url_encode
+
+_logger = logging.getLogger(__name__)
 
 
 class SaleOrder(models.Model):
@@ -540,6 +542,7 @@ class SaleOrder(models.Model):
         for invoice in invoices.values():
             invoice.compute_taxes()
             if not invoice.invoice_line_ids:
+                _logger.error("Factura con error ID: %s", invoice.id)
                 raise UserError(_(
                     'There is no invoiceable line. If a product has a Delivered quantities invoicing policy, please make sure that a quantity has been delivered.'))
             # If invoice is negative, do a refund invoice instead
@@ -639,6 +642,7 @@ class SaleOrder(models.Model):
                 invoices[group_key].reference = sale_orders.reference
 
         if not invoices:
+            _logger.error("Pedidos con error de facturacion IDs: %s", ", ".join(self.ids))
             raise UserError(_('There is no invoiceable line. If a product has a Delivered quantities invoicing policy, please make sure that a quantity has been delivered.'))
 
         self._finalize_invoices(invoices, references)
