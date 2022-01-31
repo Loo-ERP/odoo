@@ -118,6 +118,7 @@ import collections
 from datetime import datetime
 
 import logging
+import reprlib
 import traceback
 from functools import partial
 from zlib import crc32
@@ -1148,7 +1149,7 @@ class expression(object):
                     push(create_substitution_leaf(leaf, ('id', inselect_operator, (subselect, params)), model, internal=True))
                 else:
                     _logger.error("Binary field '%s' stored in attachment: ignore %s %s %s",
-                                  field.string, left, operator, right)
+                                  field.string, left, operator, reprlib.repr(right))
                     leaf.leaf = TRUE_LEAF
                     push(leaf)
 
