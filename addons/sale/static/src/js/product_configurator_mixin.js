@@ -43,6 +43,10 @@ var ProductConfiguratorMixin = {
             $parent.data('uniqueId', _.uniqueId());
         }
         this._throttledGetCombinationInfo($parent.data('uniqueId'))(ev);
+        $parent.find('.css_attribute_color')
+            .removeClass("active")
+            .filter(':has(input:checked)')
+            .addClass("active");
     },
     /**
      * @see onChangeVariant
