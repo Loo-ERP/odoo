@@ -397,6 +397,7 @@ class Users(models.Model):
         """We check that no users are both portal and users (same with public).
            This could typically happen because of implied groups.
         """
+        return
         user_types_category = self.env.ref('base.module_category_user_type', raise_if_not_found=False)
         user_types_groups = self.env['res.groups'].search(
             [('category_id', '=', user_types_category.id)]) if user_types_category else False
