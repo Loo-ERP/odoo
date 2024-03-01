@@ -821,6 +821,8 @@ class PaymentTransaction(models.Model):
         payments = defaultdict(lambda: self.env['account.payment'])
         for trans in self:
             if trans.payment_id:
+                if trans.payment_id.state == "posted":
+                    continue
                 payments[trans.acquirer_id.company_id.id] += trans.payment_id
                 continue
 
